@@ -13,7 +13,7 @@
       <div class="clr"></div>
       <p>Ngày đăng: <%=songDetail.getCreateAt() %>. Lượt xem: <%=songDetail.getCounter() %></p>
       <div class="vnecontent">
-         
+         <%=songDetail.getDetail() %>
       </div>
     </div>
     <div class="article">
@@ -21,7 +21,7 @@
       <div class="clr"></div>
       <div class="comment"> <a href=""><img src="images/<%=songDetail.getPicture() %>" width="40" height="40" alt="" class="userpic" /></a>
         <h2><a href=""><%=songDetail.getName() %></a></h2>
-        <p><%=songDetail.getDetail() %></p>
+        <p><%=songDetail.getDescription() %></p>
       </div>
     </div>
     <%} %>

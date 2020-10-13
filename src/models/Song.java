@@ -28,5 +28,17 @@ public class Song {
 		this.createAt = createAt;
 		this.counter = counter;
 	}
+	public Song(String name, String description, String detail, String picture, Timestamp createAt, int counter,
+			Category cat) {
+		super();
+		this.name = name;
+		this.description = description;
+		this.detail = detail;
+		this.picture = picture;
+		this.createAt = createAt;
+		this.counter = counter;
+		this.cat = cat;
+	}
+	
 	
 }

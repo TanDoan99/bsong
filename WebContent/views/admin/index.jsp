@@ -18,7 +18,7 @@
                     <i class="fa fa-bars"></i>
                 </span>
                     <div class="text-box">
-                        <p class="main-text"><a href="" title="">Quản lý danh mục</a></p>
+                        <p class="main-text"><a href="<%=request.getContextPath()%>/admin/cat/index" title="">Quản lý danh mục</a></p>
                         <p class="text-muted">Có 5 danh mục</p>
                     </div>
                 </div>
@@ -40,7 +40,7 @@
                     <i class="fa fa-rocket"></i>
                 </span>
                     <div class="text-box">
-                        <p class="main-text"><a href="" title="">Quản lý người dùng</a></p>
+                        <p class="main-text"><a href="<%=request.getContextPath()%>/admin/user" title="">Quản lý người dùng</a></p>
                         <p class="text-muted">Có 15 người dùng</p>
                     </div>
                 </div>

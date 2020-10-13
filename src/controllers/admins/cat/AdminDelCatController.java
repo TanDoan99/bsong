@@ -20,11 +20,11 @@ public class AdminDelCatController extends HttpServlet {
 		int id=Integer.parseInt(request.getParameter("id"));
 		int dele=catDAO.del(id);
 		if(dele>0) {
-			//them thanh cong
+			//xóa thành công
 			response.sendRedirect(request.getContextPath()+"/admin/cat/index?msg=1");
 			return;
 		}
-		//that bai
+		//thất bại
 		response.sendRedirect(request.getContextPath()+"/admin/cat/index?err=0");
 		return;
 		

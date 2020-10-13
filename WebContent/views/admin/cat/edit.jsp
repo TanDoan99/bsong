@@ -38,6 +38,15 @@
 							<%
 								}
 							%>
+							<% 
+							if("3".equals(err)) {
+							%>
+							<div class="alert alert-danger" role="alert">
+ 								 Không tìm thấy id để sửa!
+							</div>
+							<%
+								}
+							%>
                                 <form role="form" method="post"  id="form">
                                 <%
                                 	if(request.getAttribute("cat")!=null){

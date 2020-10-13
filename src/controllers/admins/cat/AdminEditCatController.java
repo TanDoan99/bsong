@@ -18,8 +18,14 @@ public class AdminEditCatController extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int id=0;
+		try {
+			id= Integer.parseInt(request.getParameter("id"));
+		} catch (Exception e) {
+			response.sendRedirect(request.getContextPath()+"/admin/cat/edit?err=3");
+			return;
+		}
 		CatDAO catDao = new CatDAO();
-		int id = Integer.parseInt(request.getParameter("id"));
 		Category cat = catDao.findEdit(id);
 		request.setAttribute("cat", cat);
 		RequestDispatcher rd=request.getRequestDispatcher("/views/admin/cat/edit.jsp");
