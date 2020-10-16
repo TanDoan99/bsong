@@ -101,7 +101,7 @@
                                         <td class="center"><%=user.getFullname() %></td>
                                         <td class="center">
                                             <a href="<%=request.getContextPath() %>/admin/user/edit?id=<%=user.getId() %>" title="" class="btn btn-primary"><i class="fa fa-edit "></i> Sửa</a>
-                                            <a href="<%=request.getContextPath() %>/admin/user/del?id=<%=user.getId() %>" title="" class="btn btn-danger"onclick="return confirm('Bạn có chắc chắn muốn xóa không?')"><i class="fa fa-pencil"></i> Xóa</a>
+                                            <a href="<%=request.getContextPath() %>/admin/user/del?id=<%=user.getId() %>" title="" class="btn btn-danger"onclick="return confirm('Bạn có chắc chắn muốn xóa người dùng không?')"><i class="fa fa-pencil"></i> Xóa</a>
                                         </td>
                                     </tr>
 									<%

@@ -92,7 +92,7 @@
                                         <td class="center"><%=name %></td>
                                         <td class="center">
                                             <a href="<%=request.getContextPath()%>/admin/cat/edit?id=<%=cat.getId()%>" title="" class="btn btn-primary"><i class="fa fa-edit "></i> Sửa</a>
-                                            <a href="<%=request.getContextPath()%>/admin/cat/del?id=<%=cat.getId() %>" title="" class="btn btn-danger"><i class="fa fa-pencil"></i> Xóa</a>
+                                            <a href="<%=request.getContextPath()%>/admin/cat/del?id=<%=cat.getId() %>" title="" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa danh mục không?')"><i class="fa fa-pencil"></i> Xóa</a>
                                         </td>
                                     </tr>
 									<%

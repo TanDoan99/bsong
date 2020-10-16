@@ -7,7 +7,7 @@
     <div class="article">
     <%
    		if( request.getAttribute("cat")!=null){
-   			Category cat=(Category)request.getAttribute("cat");
+   		Category cat=(Category)request.getAttribute("cat");
     %>
 		<h1><%=cat.getName()%></h1>
 		
@@ -16,8 +16,9 @@
 	%>
     </div>
     <%
-    	if(request.getAttribute("listCatSong")!=null){
-    		ArrayList<Song> listCatSong=(ArrayList<Song>)request.getAttribute("listCatSong");
+    	if(request.getAttribute("listCatSong")!=null&&request.getAttribute("cat_id")!=null){
+    		int cat_id=(int)request.getAttribute("cat_id");
+    		ArrayList<Song> listCatSong=(ArrayList<Song>)request.getAttribute("listCatSongPage");
     		if(listCatSong!=null&listCatSong.size()>0){
     			for(Song catSong:listCatSong){
     				
@@ -30,7 +31,7 @@
       <div class="img"><img src="<%=request.getContextPath()%>/templates/public/images/<%=catSong.getPicture() %>" width="177" height="213" alt="Đổi thay" class="fl" /></div>
       <div class="post_content">
         <p><%=catSong.getDescription()%>.</p>
-        <p class="spec"><a href="<%=request.getContextPath()%>/detail?id=<%=catSong.getId() %>" class="rm">Chi tiết &raquo;</a></p>
+        <p class="spec"><a href="<%=request.getContextPath()%>/detail?id=<%=catSong.getId() %>&&cat_id=<%=cat_id %>" class="rm">Chi tiết &raquo;</a></p>
       </div>
       <div class="clr"></div>
     </div>
@@ -39,11 +40,33 @@
     		}
     	}
    %>
+   <%
+	ArrayList<Song> songs=(ArrayList<Song>)request.getAttribute("listCatSongPage");
+   	int numberOfPages=(Integer)request.getAttribute("numberOfPages");
+   	int currentPage=(Integer)request.getAttribute("currentPage");
+   	if(songs!=null&&songs.size()>0){
+   %>
     <p class="pages"><small>Trang 1 của 3</small>
-    <span>1</span>
-    <a href="">2</a>
-    <a href="">3</a>
+    <%
+    	for(int i=1;i<=numberOfPages;i++){
+    		if(currentPage==i){
+    %>
+    <span><%=i%></span>
+    <%}else{%>
+    	    <%
+   		if( request.getAttribute("cat")!=null){
+   		Category cat=(Category)request.getAttribute("cat");
+    %>
+    	
+   		
+    <a href="<%=request.getContextPath()%>/cat?id=<%=cat.getId()%>&page=<%=i%>"><%=i%></a>
+    <%
+   				}
+    		}
+    	}
+    %>
     <a href="#">&raquo;</a></p>
+    <% } %>
   </div>
   <div class="sidebar">
       <%@ include file="/templates/public/inc/leftbar.jsp" %>

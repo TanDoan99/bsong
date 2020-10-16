@@ -48,15 +48,29 @@
 								}
 							%>
                                 <form role="form" method="post"  id="form">
-                                <%
-                                	if(request.getAttribute("cat")!=null){
-                                  	Category cat=(Category) request.getAttribute("cat");
-                                %>
-                                    <div class="form-group">
-                                        <label for="name">Tên danh mục</label>
-                                        <input type="text" id="name" value="<%=cat.getName()%>" name="name" class="form-control" />
+                                   <div class="form-group">
+                                        <label for="name">Tên bài hát</label>
+                                        <input type="text" id="name" value="" name="name" class="form-control" />
                                     </div>
-                                   <%} %>
+                                    <div class="form-group">
+                                        <label for="category">Danh mục bài hát</label>
+                                        <select id="category" name="category" class="form-control">
+                                        
+											
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="picture">Hình ảnh</label>
+                                        <input type="file" name="picture" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="preview">Mô tả</label>
+                                        <textarea id="preview" class="form-control" rows="3" name="preview"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="detail">Chi tiết</label>
+                                        <textarea id="detail" class="form-control" id="detail" rows="5" name="detail"></textarea>
+                                    </div>
                                     <button type="submit" name="submit" class="btn btn-success btn-md">Sửa</button>
                                 </form>
                             </div>

@@ -12,6 +12,11 @@
         <!-- /. ROW  -->
         <hr />
         <div class="row">
+        	<%
+        		int countCat=Integer.parseInt(String.valueOf(request.getAttribute("countCat")));
+        		int countSong=Integer.parseInt(String.valueOf(request.getAttribute("countSong")));
+        		int countUser=Integer.parseInt(String.valueOf(request.getAttribute("countUser")));
+        	%>
             <div class="col-md-4 col-sm-4 col-xs-4">
                 <div class="panel panel-back noti-box">
                     <span class="icon-box bg-color-green set-icon">
@@ -19,7 +24,7 @@
                 </span>
                     <div class="text-box">
                         <p class="main-text"><a href="<%=request.getContextPath()%>/admin/cat/index" title="">Quản lý danh mục</a></p>
-                        <p class="text-muted">Có 5 danh mục</p>
+                        <p class="text-muted">Có <%=countCat %> danh mục</p>
                     </div>
                 </div>
             </div>
@@ -29,8 +34,8 @@
                     <i class="fa fa-bell-o"></i>
                 </span>
                     <div class="text-box">
-                        <p class="main-text"><a href="" title="">Quản lý bài hát</a></p>
-                        <p class="text-muted">Có 10 bài hát</p>
+                        <p class="main-text"><a href="<%=request.getContextPath()%>/admin/song" title="">Quản lý bài hát</a></p>
+                        <p class="text-muted">Có <%=countSong %> bài hát</p>
                     </div>
                 </div>
             </div>
@@ -41,7 +46,7 @@
                 </span>
                     <div class="text-box">
                         <p class="main-text"><a href="<%=request.getContextPath()%>/admin/user" title="">Quản lý người dùng</a></p>
-                        <p class="text-muted">Có 15 người dùng</p>
+                        <p class="text-muted">Có <%=countUser %> người dùng</p>
                     </div>
                 </div>
             </div>

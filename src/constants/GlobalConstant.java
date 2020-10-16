@@ -1,5 +1,5 @@
 package constants;
 
 public class GlobalConstant {
-	//define variable
+	public static final String DIR_UPLOAD="uploads/images";
 }

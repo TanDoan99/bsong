@@ -1,6 +1,7 @@
 package controllers.publics;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -9,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import daos.CatDAO;
 import daos.SongDAO;
-import models.Category;
 import models.Song;
 
 public class PublicDetailController extends HttpServlet {
@@ -21,14 +21,21 @@ public class PublicDetailController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		int id=Integer.parseInt(request.getParameter("id"));
-		SongDAO songDAO=new SongDAO();
-		Song songDetail=songDAO.getDetail(id);
-		CatDAO catDAO=new CatDAO();
-		Category cat= catDAO.getItem(id);
-		request.setAttribute("cat", cat);
-
+		int id=0;
+		try {
+			id = Integer.parseInt(request.getParameter("id"));
+		} catch (Exception e) {
+			response.sendRedirect(request.getContextPath()+"/404");
+		}
+		int cat_id = Integer.parseInt(request.getParameter("cat_id"));
+		SongDAO songDAO = new SongDAO();
+		List<Song> songDetail = songDAO.getDetail(id);
+		CatDAO catDAO = new CatDAO();
+		List<Song> listDetail= catDAO.getItemDetail(cat_id);
+		
 		request.setAttribute("songDetail", songDetail);
+		request.setAttribute("listDetail", listDetail);
+		
 		request.getRequestDispatcher("/views/public/detail.jsp").forward(request, response);
 	}
 

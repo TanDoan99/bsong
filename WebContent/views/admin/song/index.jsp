@@ -1,4 +1,6 @@
-﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
+﻿<%@page import="models.Song"%>
+<%@page import="java.util.List"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ include file="/templates/admin/assets/inc/header.jsp" %>
 <%@ include file="/templates/admin/assets/inc/leftbar.jsp" %>
@@ -19,7 +21,7 @@
                         <div class="table-responsive">
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <a href="" class="btn btn-success btn-md">Thêm</a>
+                                    <a href="<%=request.getContextPath() %>/admin/song/add" class="btn btn-success btn-md">Thêm</a>
                                 </div>
                                 <div class="col-sm-6" style="text-align: right;">
                                     <form method="post" action="">
@@ -29,7 +31,25 @@
                                     </form><br />
                                 </div>
                             </div>
-
+							<%
+								String msg = (String) request.getParameter("msg");
+												if("OK".equals(msg)) {
+							%>
+							<div class="alert alert-success" role="alert">
+	 							 Thêm thành công!
+							</div>
+							<%
+								}
+							%>
+							<%
+								if("1".equals(msg)) {
+							%>
+							<div class="alert alert-warning"  role="alert">
+ 								Xóa thành công!
+							</div>
+							<%
+								}
+							%>
                             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                 <thead>
                                     <tr>
@@ -42,45 +62,38 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                	<%
+                                		if(request.getAttribute("songList")!=null){
+                                			List<Song> songList=(List<Song>)request.getAttribute("songList");
+                                			if(songList.size()>0){
+                                				for(Song songs:songList){
+                                	%>
                                     <tr>
-                                        <td>1</td>
-                                        <td class="center">Đổi thay</td>
-                                        <td class="center">Nhạc Pop</td>
-                                        <td class="center">2</td>
+                                        <td><%=songs.getId() %></td>
+                                        <td class="center"><%=songs.getName() %></td>
+                                        <td class="center"><%=songs.getCat().getName() %></td>
+                                        <td class="center"><%=songs.getCounter() %></td>
                                         <td class="center">
-											<img width="200px" height="200px" src="<%=request.getContextPath()%>/templates/admin/assets/img/doi-thay.jpg" alt="Đổi thay"/>
+                                        	
+                                        	<%
+                                        		if(!"".equals(songs.getPicture())){
+                                        	%>
+											<img width="200px" height="200px" src="<%=request.getContextPath()%>/uploads/images/<%=songs.getPicture() %>" alt="<%=songs.getPicture() %>"/>
+                                        	<%}else{%>
+											<img width="200px" height="200px" src="<%=request.getContextPath()%>/templates/admin/assets/img/no-img.jpg" alt="Đổi thay"/>
+                                      		<%} %>
                                         </td>
                                         <td class="center">
                                             <a href="" title="" class="btn btn-primary"><i class="fa fa-edit "></i> Sửa</a>
-                                            <a href="" title="" class="btn btn-danger"><i class="fa fa-pencil"></i> Xóa</a>
+                                            <a href="<%=request.getContextPath() %>/admin/song/del?id=<%=songs.getId() %>" onclick="return confirm('Bạn có chắc chắn muốn xóa bài hát không?')" title="" class="btn btn-danger"><i class="fa fa-pencil"></i> Xóa</a>
                                         </td>
                                     </tr>
-									<tr>
-                                        <td>2</td>
-                                        <td class="center">Only Love</td>
-                                        <td class="center">Nhạc Ngoại</td>
-                                        <td class="center">5</td>
-                                        <td class="center">
-											<img width="200px" height="200px" src="<%=request.getContextPath()%>/templates/admin/assets/img/only-love.jpg" alt="Only Love"/>
-                                        </td>
-                                        <td class="center">
-                                            <a href="" title="" class="btn btn-primary"><i class="fa fa-edit "></i> Sửa</a>
-                                            <a href="" title="" class="btn btn-danger"><i class="fa fa-pencil"></i> Xóa</a>
-                                        </td>
-                                    </tr>
-									<tr>
-                                        <td>3</td>
-                                        <td class="center">Nơi ấy con tìm về</td>
-                                        <td class="center">Nhạc Pop</td>
-                                        <td class="center">3</td>
-                                        <td class="center">
-											<img width="200px" height="200px" src="<%=request.getContextPath()%>/templates/admin/assets/img/noi-ay-con-tim-ve.jpg" alt="Nơi ấy con tìm về"/>
-                                        </td>
-                                        <td class="center">
-                                            <a href="" title="" class="btn btn-primary"><i class="fa fa-edit "></i> Sửa</a>
-                                            <a href="" title="" class="btn btn-danger"><i class="fa fa-pencil"></i> Xóa</a>
-                                        </td>
-                                    </tr>
+                                    <%
+                                				}
+                                			}
+                                		}
+                                    %>
+									
                                 </tbody>
                             </table>
                             <div class="row">

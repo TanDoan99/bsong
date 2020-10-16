@@ -1,4 +1,6 @@
-﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
+﻿<%@page import="models.Category"%>
+<%@page import="java.util.List"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ include file="/templates/admin/assets/inc/header.jsp" %>
 <%@ include file="/templates/admin/assets/inc/leftbar.jsp" %>
@@ -18,7 +20,7 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-md-12">
-                                <form role="form" method="post" enctype="multipart/form-data" id="form">
+                                <form role="form" method="post" enctype="multipart/form-data" action="<%=request.getContextPath() %>/admin/song/add" id="form">
                                     <div class="form-group">
                                         <label for="name">Tên bài hát</label>
                                         <input type="text" id="name" value="" name="name" class="form-control" />
@@ -26,11 +28,19 @@
                                     <div class="form-group">
                                         <label for="category">Danh mục bài hát</label>
                                         <select id="category" name="category" class="form-control">
-	                                        <option value="1">Option 1</option>
-											<option value="2">Option 2</option>
-											<option value="3" selected>Option 3</option>
-											<option value="4">Option 4</option>
-											<option value="5">Option 5</option>
+                                        <%
+                                        	if(request.getAttribute("catList")!=null){
+                                        		List<Category> catList=(List<Category>)request.getAttribute("catList");
+                                        		if(catList.size()>0){
+                                        			for(Category cat:catList){
+                                        				%>
+	                                       				 <option value="<%=cat.getId()%>"><%=cat.getName() %></option>
+	                                       				 <%
+                                        			}
+                                        		}
+                                        	}
+                                        %>
+											
                                         </select>
                                     </div>
                                     <div class="form-group">

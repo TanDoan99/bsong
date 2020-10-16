@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import models.Category;
+import models.Song;
 import utils.DBConnectionUtil;
 
 public class CatDAO extends AbstractDAO{
@@ -98,8 +99,7 @@ public class CatDAO extends AbstractDAO{
 		}
 		return result;
 	}
-
-	public  Category getItem(int catid) {
+	public Category getItem(int catid) {
 		Category cat = null;
 		con = DBConnectionUtil.getConnection();
 		String sql = "SELECT * FROM categories WHERE id = ?";
@@ -117,5 +117,27 @@ public class CatDAO extends AbstractDAO{
 		}
 		return cat;
 	}
+	
+	public List<Song> getItemDetail(int cat_id) {
+		List<Song> list=new ArrayList<Song>();
+		con=DBConnectionUtil.getConnection();
+		String sql="SELECT * FROM songs WHERE cat_id = ?";
+		try {
+			pst=con.prepareStatement(sql);
+			pst.setInt(1, cat_id);
+			rs=pst.executeQuery();
+			while(rs.next()) {
+				list.add(new Song(rs.getInt("id"), rs.getString("name"), rs.getString("preview_text"), rs.getString("detail_text"), rs.getString("picture"), rs.getTimestamp("date_create"), rs.getInt("cat_id")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		
+		}finally {
+			DBConnectionUtil.close(rs, pst, con);
+		}
+		return list;
+	}
 
+
+	
 }

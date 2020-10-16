@@ -1,5 +1,6 @@
 eclipse.preferences.version=1
 encoding//src/controllers/admins/cat/AdminEditCatController.java=UTF-8
+encoding//src/controllers/admins/song/AdminEditSongController.java=UTF-8
 encoding//src/utils/AuthUtil.java=UTF-8
 encoding//src/utils/DBConnectionUtil.java=UTF-8
 encoding//src/utils/DefineUtil.java=UTF-8

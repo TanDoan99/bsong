@@ -1,3 +1,4 @@
+<%@page import="daos.SongDAO"%>
 <%@page import="models.Song"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
@@ -6,9 +7,12 @@
   <div class="mainbar">
   <%
   	if(request.getAttribute("listSong")!=null){
+  		int cat_id = 0;
   		ArrayList<Song> listSong=(ArrayList<Song>)request.getAttribute("listSong");
+  		SongDAO songDAO=new SongDAO();
   			if(listSong.size()>0){
   				for(Song song:listSong){
+  					cat_id=songDAO.findCatIdIndex(song.getId());
   					
   	
   %>
@@ -19,7 +23,7 @@
       <div class="img"><img src="<%=request.getContextPath()%>/templates/public/images/<%=song.getPicture()%>" width="177" height="213" alt="<%=song.getName() %>" class="fl" /></div>
       <div class="post_content">
         <p><%=song.getDescription() %></p>
-        <p class="spec"><a href="<%=request.getContextPath()%>/detail?id=<%=song.getId() %>" class="rm">Chi tiết &raquo;</a></p>
+        <p class="spec"><a href="<%=request.getContextPath()%>/detail?id=<%=song.getId()%>&&cat_id=<%=cat_id %>" class="rm">Chi tiết &raquo;</a></p>
       </div>
       <div class="clr"></div>
     </div>

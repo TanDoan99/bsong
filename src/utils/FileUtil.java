@@ -1,6 +1,13 @@
 package utils;
 
+import java.io.File;
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
+
+import constants.GlobalConstant;
 
 public class FileUtil {
 
@@ -29,6 +36,22 @@ public class FileUtil {
 			}
 		}
 		return null;
+	}
+	//method upload file
+	public static String upload(String nameInput,HttpServletRequest request	)throws ServletException,IOException{
+		Part part = request.getPart(nameInput);
+		String fileName =rename(part.getSubmittedFileName()) ;//ten file
+		if(!"".equals(fileName)) {
+		String dirPath = request.getServletContext().getRealPath("") + GlobalConstant.DIR_UPLOAD;
+		//System.out.println(dirPath); địa chỉ đường dẫn đến file
+		File saveDir = new File(dirPath);//java.io
+		if(!saveDir.exists()) {
+			saveDir.mkdirs();
+		}
+		String filePath = dirPath + File.separator + fileName;
+		part.write(filePath);
+		}
+		return fileName;
 	}
 
 }
