@@ -1,3 +1,4 @@
+<%@page import="models.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <!DOCTYPE html>
@@ -29,6 +30,12 @@
                 </button>
                 <a class="navbar-brand" href="index.html">VinaEnter Edu</a>
             </div>
-            <div style="color: white;padding: 15px 50px 5px 50px;float: right;font-size: 16px;"> Xin chào, <b>Admin</b> &nbsp; <a href="" class="btn btn-danger square-btn-adjust">Đăng xuất</a> </div>
+            <%
+            	if(session.getAttribute("userInfo")!=null){
+            		User user=(User)session.getAttribute("userInfo");
+            	
+            %>
+            <div style="color: white;padding: 15px 50px 5px 50px;float: right;font-size: 16px;"> Xin chào, <b><%=user.getUsername()%></b> &nbsp; <a href="<%=request.getContextPath() %>/auth/logout" class="btn btn-danger square-btn-adjust">Đăng xuất</a> </div>
+        	<%} %>
         </nav>
         <!-- /. NAV TOP  -->

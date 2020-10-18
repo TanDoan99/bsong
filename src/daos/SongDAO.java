@@ -294,6 +294,82 @@ public class SongDAO extends AbstractDAO {
 		return result;
 	}
 
+	public Song findSong(int id) {
+		Song song=null;
+		con=DBConnectionUtil.getConnection();
+		String sql="SELECT s.*,c.name AS catName FROM songs AS s "
+				+"INNER JOIN categories AS c "
+				+"ON s.cat_id=c.id "
+				+"WHERE s.id=?";
+		try {
+			pst=con.prepareStatement(sql);
+			pst.setInt(1, id);
+			rs=pst.executeQuery();
+			if(rs.next()) {
+				 song=new  Song(
+						rs.getInt("id"),
+						rs.getString("name"), 
+						rs.getString("preview_text"), 
+						rs.getString("detail_text"), 
+						rs.getString("picture"), 
+						rs.getTimestamp("date_create"), 
+						rs.getInt("counter"),
+						new Category(rs.getInt("cat_id"),
+								rs.getString("catName")));
+			} ;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		
+		}finally {
+			DBConnectionUtil.close(rs, pst, con);
+		}
+		return song;
+	}
+
+	public int editSong(Song song) {
+		int result=0;
+		con=DBConnectionUtil.getConnection();
+		String sql="UPDATE songs SET name = ? , preview_text = ? , detail_text = ? , picture = ? , cat_id = ? WHERE id = ? ";
+		try {
+			pst=con.prepareStatement(sql);
+			
+			pst.setString(1,song.getName());
+			pst.setString(2, song.getDescription());
+			pst.setString(3, song.getDetail());
+			pst.setString(4, song.getPicture());
+			pst.setInt(5, song.getCat().getId());
+			pst.setInt(6, song.getId());
+			result=pst.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			DBConnectionUtil.close(rs, pst, con);
+		}
+		return result;
+	}
+
+	public Song findOne(int id) {
+		Song song = null;
+		con=DBConnectionUtil.getConnection();
+		try {
+			String sql = "SELECT * FROM songs WHERE id= ?";
+			pst = con.prepareStatement(sql);
+			pst.setInt(1, id);
+			rs = pst.executeQuery();
+			if(rs.next()) {
+			song = new Song(rs.getInt("id"), rs.getString("name"),
+					rs.getString("preview_text"), rs.getString("detail_text"),
+					rs.getString("picture"), new Category(rs.getInt("cat_id")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBConnectionUtil.close(rs, pst, con);
+		}
+		return song;
+	}
+
 	
 
 }

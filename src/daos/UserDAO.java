@@ -4,6 +4,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import models.Category;
+import models.Song;
 import models.User;
 import utils.DBConnectionUtil;
 
@@ -134,5 +136,26 @@ public class UserDAO extends AbstractDAO {
 
 		return result;
 	}
-
+	public User findUsernameAndPassword(String username, String password) {
+		User user= null;
+		con=DBConnectionUtil.getConnection();
+		try {
+			String sql = "SELECT * FROM users WHERE username = ? AND password = ? ";
+			pst = con.prepareStatement(sql);
+			pst.setString(1, username);
+			pst.setString(2, password);
+			rs = pst.executeQuery();
+			if(rs.next()) {
+				user = new User(rs.getInt("id"),
+						rs.getString("username"),
+						rs.getString("password"),
+						rs.getString("fullname"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBConnectionUtil.close(rs, pst, con);
+		}
+		return user;
+	}
 }

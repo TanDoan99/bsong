@@ -130,7 +130,7 @@
     </div>
 </div>
 <script>
-    document.getElementById("cat").classList.add('active-menu');
+    document.getElementById("category").classList.add('active-menu');
 </script>
 <!-- /. PAGE INNER  -->
 <%@ include file="/templates/admin/assets/inc/footer.jsp" %>

@@ -1,6 +1,8 @@
 package daos;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import models.Contact;
 import utils.DBConnectionUtil;
@@ -25,6 +27,26 @@ public class ContactDAO extends AbstractDAO {
 			DBConnectionUtil.close(rs, pst, con);
 		}
 		return result;
+	}
+
+	public List<Contact> findAll() {
+		List<Contact> listContact=new ArrayList<>();
+		con=DBConnectionUtil.getConnection();
+		String sql="SELECT * FROM contacts ORDER BY id DESC";
+		try {
+			st=con.createStatement();
+			rs=st.executeQuery(sql);
+			while(rs.next()) {
+				Contact cont= new Contact(rs.getInt("id"), rs.getString("name"), rs.getString("website"), rs.getString("email"), rs.getString("message"));
+				listContact.add(cont);
+			} ;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		
+		}finally {
+			DBConnectionUtil.close(rs, st, con);
+		}
+		return listContact;
 	}
 
 }

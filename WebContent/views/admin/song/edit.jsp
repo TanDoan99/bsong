@@ -1,3 +1,5 @@
+<%@page import="models.Song"%>
+<%@page import="java.util.List"%>
 <%@page import="models.Category"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
@@ -47,31 +49,65 @@
 							<%
 								}
 							%>
-                                <form role="form" method="post"  id="form">
+                                <form action="<%=request.getContextPath() %>/admin/song/edit" role="form" method="post"  id="form" enctype="multipart/form-data">
+                                	<%
+                                		if(request.getAttribute("song")!=null){
+                                			Song song=(Song) request.getAttribute("song");
+                                			if(song!=null){
+                                				
+                                	%>
+                                	
                                    <div class="form-group">
+                                   
+                                        <input type="hidden" id="name" value="<%=song.getId()%>" name="id" class="form-control" />
+                                    </div>
+                                   <div class="form-group">
+                                   
                                         <label for="name">Tên bài hát</label>
-                                        <input type="text" id="name" value="" name="name" class="form-control" />
+                                        <input type="text" id="name" value="<%=song.getName() %>" name="name" class="form-control" />
                                     </div>
                                     <div class="form-group">
                                         <label for="category">Danh mục bài hát</label>
                                         <select id="category" name="category" class="form-control">
-                                        
+                                         <%
+                                        	if(request.getAttribute("listCat")!=null){
+                                        		List<Category> listCat=(List<Category>)request.getAttribute("listCat");
+                                        		if(listCat.size()>0){
+                                        			for(Category cat:listCat){
+                                        				%>
+	                                       				 <option value="<%=cat.getId()%>"
+	                                       				 <%
+	                                       				 	if(song.getCat().getId()==cat.getId())
+	                                       					 out.print("selected");
+	                                       				 %>
+	                                       				 ><%=cat.getName() %></option>
+	                                       				 <%
+                                        			}
+                                        		}
+                                        	}
+                                        %>
 											
                                         </select>
                                     </div>
                                     <div class="form-group">
+                                    <img alt="<%=request.getContextPath() %>/uploads/images/main_bg.gif" src="<%=request.getContextPath() %>/uploads/images/<%=song.getPicture()%>"><br/>
                                         <label for="picture">Hình ảnh</label>
                                         <input type="file" name="picture" />
                                     </div>
                                     <div class="form-group">
                                         <label for="preview">Mô tả</label>
-                                        <textarea id="preview" class="form-control" rows="3" name="preview"></textarea>
+                                        <textarea id="preview" class="form-control" rows="3" name="preview"><%=song.getDescription() %></textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="detail">Chi tiết</label>
-                                        <textarea id="detail" class="form-control" id="detail" rows="5" name="detail"></textarea>
+                                        <textarea id="detail" class="form-control" id="detail" rows="5" name="detail"><%=song.getDetail() %></textarea>
                                     </div>
                                     <button type="submit" name="submit" class="btn btn-success btn-md">Sửa</button>
+                                      <%
+                                				
+                                			}
+                                		}
+                                    %>
                                 </form>
                             </div>
                         </div>

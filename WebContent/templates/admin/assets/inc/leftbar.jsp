@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
+    <%
+    	if(session.getAttribute("userInfo")!=null){
+    %>
 <nav class="navbar-default navbar-side" role="navigation">
     <div class="sidebar-collapse">
         <ul class="nav" id="main-menu">
@@ -24,4 +27,5 @@
         </ul>
     </div>
 </nav>
+<%} %>
 <!-- /. NAV SIDE  -->

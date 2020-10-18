@@ -27,6 +27,7 @@ public class PublicCatController extends HttpServlet {
 			cat_id=Integer.parseInt(request.getParameter("id"));
 		} catch (Exception e) {
 			response.sendRedirect(request.getContextPath()+"/404");
+			return;
 		}
 		int currentPage=1;
 		try {

@@ -1,5 +1,7 @@
-﻿<%@page import="models.Song"%>
+﻿<%@page import="models.Contact"%>
 <%@page import="java.util.List"%>
+<%@page import="models.User"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ include file="/templates/admin/assets/inc/header.jsp" %>
@@ -8,7 +10,7 @@
     <div id="page-inner">
         <div class="row">
             <div class="col-md-12">
-                <h2>Quản lý bài hát</h2>
+                <h2>Quản lý người dùng</h2>
             </div>
         </div>
         <!-- /. ROW  -->
@@ -21,7 +23,7 @@
                         <div class="table-responsive">
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <a href="<%=request.getContextPath() %>/admin/song/add" class="btn btn-success btn-md">Thêm</a>
+                                    <a href="<%=request.getContextPath() %>" class="btn btn-success btn-md">Thêm</a>
                                 </div>
                                 <div class="col-sm-6" style="text-align: right;">
                                     <form method="post" action="">
@@ -31,29 +33,39 @@
                                     </form><br />
                                 </div>
                             </div>
-							<%
+                            <%
 								String msg = (String) request.getParameter("msg");
-												if("OK".equals(msg)) {
+								String err = (String) request.getParameter("err");
+								if("OK".equals(msg)) {
 							%>
 							<div class="alert alert-success" role="alert">
-	 							 Thêm thành công!
+	 							 Thêm liên hệ thành công!
+							</div>
+							
+							<% }
+								if("2".equals(msg)) {
+							%>
+							<div class="alert alert-success" role="alert">
+	 							 Xóa liên hệ thành công!
 							</div>
 							<%
 								}
 							%>
-							<% if("ok".equals(msg)) {
+							
+                            <%
+							if("1".equals(err)) {
 							%>
-							<div class="alert alert-success" role="alert">
-	 							 Sửa thành công!
+							<div class="alert alert-danger" role="alert">
+	 							 ID không tồn tại!
 							</div>
 							<%
 								}
 							%>
-							<%
-								if("1".equals(msg)) {
+                            <%
+							if("2".equals(err)) {
 							%>
-							<div class="alert alert-warning"  role="alert">
- 								Xóa thành công!
+							<div class="alert alert-danger" role="alert">
+	 							 Xảy ra lỗi khi xóa!
 							</div>
 							<%
 								}
@@ -62,48 +74,36 @@
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Tên bài hát</th>
-                                        <th>Danh mục</th>
-                                        <th>Lượt đọc</th>
-                                        <th>Hình ảnh</th>
-                                        <th width="160px">Chức năng</th>
+                                        <th>Tên liên hệ</th>
+                                        <th>Email</th>
+                                        <th>Website</th>
+                                        <th>Nội dung</th>
+                                        <th>Chức năng</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                	<%
-                                		if(request.getAttribute("songList")!=null){
-                                			List<Song> songList=(List<Song>)request.getAttribute("songList");
-                                			if(songList.size()>0){
-                                				for(Song songs:songList){
-                                					String urlDel=request.getContextPath()+"/admin/song/del?sid="+songs.getId();
-                                					String urlEdit=request.getContextPath() +"/admin/song/edit?id="+songs.getId();
-                                	%>
+                                <%
+                                	if(request.getAttribute("contList")!=null){
+                                		List<Contact> listCont= (List<Contact>)request.getAttribute("contList");
+                                		if(listCont.size()>0){
+                                			for(Contact cont:listCont){
+                                				
+                                		
+                                	
+                                %>
                                     <tr>
-                                        <td><%=songs.getId() %></td>
-                                        <td class="center"><%=songs.getName() %></td>
-                                        <td class="center"><%=songs.getCat().getName() %></td>
-                                        <td class="center"><%=songs.getCounter() %></td>
-                                        <td class="center">
-                                        	
-                                        	<%
-                                        		if(!"".equals(songs.getPicture())){
-                                        	%>
-											<img width="200px" height="200px" src="<%=request.getContextPath()%>/uploads/images/<%=songs.getPicture() %>" alt="<%=songs.getPicture() %>"/>
-                                        	<%}else{%>
-											<img width="200px" height="200px" src="<%=request.getContextPath()%>/templates/admin/assets/img/no-img.jpg" alt="Đổi thay"/>
-                                      		<%} %>
-                                        </td>
-                                        <td class="center">
-                                            <a href="<%=urlEdit %>" title="" class="btn btn-primary"><i class="fa fa-edit "></i> Sửa</a>
-                                            <a href="<%=urlDel%>" onclick="return confirm('Bạn có chắc chắn muốn xóa bài hát không?')" title="" class="btn btn-danger"><i class="fa fa-pencil"></i> Xóa</a>
-                                        </td>
+                                        <td class="center"><%=cont.getId()%></td>
+                                        <td class="center"><%=cont.getName() %></td>
+                                        <td class="center"><%=cont.getEmail() %></td>
+                                        <td class="center"><%=cont.getWebsite()%></td>
+                                        <td class="center"><%=cont.getMessage()%></td>
+                                         <td class="center"><a href="" title="" class="btn btn-danger"onclick="return confirm('Bạn có chắc chắn muốn xóa người dùng không?')"><i class="fa fa-pencil"></i> Xóa</a></td>
                                     </tr>
-                                    <%
-                                				}
-                                			}
+								<%	
+											}
                                 		}
-                                    %>
-									
+                                	}
+                                %>
                                 </tbody>
                             </table>
                             <div class="row">
@@ -134,7 +134,7 @@
     </div>
 </div>
 <script>
-    document.getElementById("song").classList.add('active-menu');
+    document.getElementById("contact").classList.add('active-menu');
 </script>
 <!-- /. PAGE INNER  -->
 <%@ include file="/templates/admin/assets/inc/footer.jsp" %>

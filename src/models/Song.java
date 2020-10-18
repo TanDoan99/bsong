@@ -36,6 +36,15 @@ public class Song {
 		this.picture = picture;
 		this.cat = cat;
 	}
+	public Song(int id, String name, String description, String detail, String picture, Category cat) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.detail = detail;
+		this.picture = picture;
+		this.cat = cat;
+	}
 	
 	
 	

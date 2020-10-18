@@ -171,4 +171,32 @@
   	<url-pattern>/admin/song/edit</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+  	<servlet-name>AdminIndexContactController</servlet-name>
+  	<servlet-class>controllers.admins.contact.AdminIndexContactController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>AdminIndexContactController</servlet-name>
+  	<url-pattern>/admin/contact</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>LoginController</servlet-name>
+  	<servlet-class>controllers.auth.LoginController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>LoginController</servlet-name>
+  	<url-pattern>/auth/login</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>LogoutController</servlet-name>
+  	<servlet-class>controllers.auth.LogoutController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>LogoutController</servlet-name>
+  	<url-pattern>/auth/logout</url-pattern>
+  </servlet-mapping>
+  
+  
 </web-app>
