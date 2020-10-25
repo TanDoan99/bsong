@@ -9,17 +9,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import daos.UserDAO;
+import utils.AuthUtil;
 public class AdminDelUserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     public AdminDelUserController() {
         super();
     }
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if(!AuthUtil.checkLogin(request, response)) {
+			response.sendRedirect(request.getContextPath()+"/auth/login");
+			return;
+		}
 		int id=0;
 		try {
 			id=Integer.parseInt(request.getParameter("id"));
 		} catch (Exception e) {
-			response.sendRedirect(request.getContextPath()+"/admin/user?err=1");
+			response.sendRedirect(request.getContextPath()+"/404");
 			return;
 		}
 		UserDAO userDAO=new UserDAO();

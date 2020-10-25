@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import daos.CatDAO;
 import models.Category;
+import utils.AuthUtil;
 public class AdminAddCatController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     public AdminAddCatController() {
@@ -27,6 +28,10 @@ public class AdminAddCatController extends HttpServlet {
 		response.setContentType("text/html");
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
+		if(!AuthUtil.checkLogin(request, response)) {
+			response.sendRedirect(request.getContextPath()+"/auth/login");
+			return;
+		}
 		CatDAO catDAO=new CatDAO();
 		String name=request.getParameter("name");
 		Category cat=new Category(name);

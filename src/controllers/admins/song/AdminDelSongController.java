@@ -1,6 +1,5 @@
 package controllers.admins.song;
 
-import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -8,9 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import constants.GlobalConstant;
 import daos.SongDAO;
 import models.Song;
+import utils.AuthUtil;
 import utils.FileUtil;
 
 public class AdminDelSongController extends HttpServlet {
@@ -23,6 +22,10 @@ public class AdminDelSongController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		if(!AuthUtil.checkLogin(request, response)) {
+			response.sendRedirect(request.getContextPath()+"/auth/login");
+			return;
+		}
 		SongDAO songDAO = new SongDAO();
 		int id = Integer.parseInt(request.getParameter("sid"));
 		// kiem tra tin neu co file thi xoa

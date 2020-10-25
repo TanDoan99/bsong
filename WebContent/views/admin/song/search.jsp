@@ -1,4 +1,4 @@
-﻿<%@page import="models.Category"%>
+<%@page import="models.Category"%>
 <%@page import="java.net.URI"%>
 <%@page import="java.awt.Desktop"%>
 <%@page import="models.Song"%>
@@ -36,33 +36,7 @@
                                     </form><br />
                                 </div>
                             </div>
-							<%
-								String msg = (String) request.getParameter("msg");
-												if("OK".equals(msg)) {
-							%>
-							<div class="alert alert-success" role="alert">
-	 							 Thêm thành công!
-							</div>
-							<%
-								}
-							%>
-							<% if("ok".equals(msg)) {
-							%>
-							<div class="alert alert-success" role="alert">
-	 							 Sửa thành công!
-							</div>
-							<%
-								}
-							%>
-							<%
-								if("1".equals(msg)) {
-							%>
-							<div class="alert alert-warning"  role="alert">
- 								Xóa thành công!
-							</div>
-							<%
-								}
-							%>
+						
                             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                 <thead>
                                     <tr>
@@ -77,8 +51,8 @@
                                 <tbody>
                                 	<%
                                 		List<Song> songList=null;
-                                		if(request.getAttribute("songList")!=null){
-                                			songList=(List<Song>)request.getAttribute("songList");
+                                		if(request.getAttribute("arrSong")!=null){
+                                			songList=(List<Song>)request.getAttribute("arrSong");
                                 			if(songList.size()>0){
                                 				for(Song songs:songList){
                                 					String urlDel=request.getContextPath()+"/admin/song/del?sid="+songs.getId();
@@ -113,52 +87,22 @@
                                 </tbody>
                             </table>
                             <div class="row">
-                               <%
-                           		int numberOfPages=(Integer)request.getAttribute("numberOfPages");
-                           		int currentPage=(Integer)request.getAttribute("currentPage");
-                           		if(songList != null && songList.size() > 0 && numberOfPages > 1){
-                           		
-                          	 	
-                            %>
                                 <div class="col-sm-6">
-                                    <div class="dataTables_info" id="dataTables-example_info" style="margin-top:27px">Trang <%=currentPage%>  của <%=numberOfPages %> </div>
+                                    <div class="dataTables_info" id="dataTables-example_info" style="margin-top:27px">Hiển thị từ 1 đến 5 của 24 truyện</div>
                                 </div>
                                 <div class="col-sm-6" style="text-align: right;">
-                               
                                     <div class="dataTables_paginate paging_simple_numbers" id="dataTables-example_paginate">
                                         <ul class="pagination">
-                                <%
-    							 	if (currentPage > 1) {
-     								int back = currentPage - 1;
-    							 %>
-                                            <li class="paginate_button previous disabled" aria-controls="dataTables-example" tabindex="0" id="dataTables-example_previous"><a href="<%=request.getContextPath()%>/admin/song?page=<%=back%>">Trang trước</a></li>
-                                <%
-                                  }
-                                %>
-                                 	<%
-                                        for(int i=1;i<=numberOfPages;i++){
-                                    		if(currentPage==i){
-                                 	 %>
-                                            <li class="paginate_button active" aria-controls="dataTables-example" tabindex="0"><a href="<%=request.getContextPath()%>/admin/song?page=<%=i%>"><%=i %></a></li>
-									<%
-                                    		}else{
-                                    %>
-                                            <li class="paginate_button " aria-controls="dataTables-example" tabindex="0"><a href="<%=request.getContextPath()%>/admin/song?page=<%=i%>"><%=i %></a></li>
-                                    		
-                                    <%
-                                    		}
-                                    	}
-                                 	if (currentPage < numberOfPages) {
-                                		int next = currentPage + 1;
-									%>		
-                                            <li class="paginate_button next" aria-controls="dataTables-example" tabindex="0" id="dataTables-example_next"><a href="<%=request.getContextPath()%>/admin/song?page=<%=next%>">Trang tiếp</a></li>
-                                     <%
-    										}
-   									  %>
+                                            <li class="paginate_button previous disabled" aria-controls="dataTables-example" tabindex="0" id="dataTables-example_previous"><a href="#">Trang trước</a></li>
+                                            <li class="paginate_button active" aria-controls="dataTables-example" tabindex="0"><a href="">1</a></li>
+											<li class="paginate_button" aria-controls="dataTables-example" tabindex="0"><a href="">2</a></li>
+											<li class="paginate_button" aria-controls="dataTables-example" tabindex="0"><a href="">3</a></li>
+											<li class="paginate_button" aria-controls="dataTables-example" tabindex="0"><a href="">4</a></li>
+											<li class="paginate_button" aria-controls="dataTables-example" tabindex="0"><a href="">5</a></li>
+                                            <li class="paginate_button next" aria-controls="dataTables-example" tabindex="0" id="dataTables-example_next"><a href="#">Trang tiếp</a></li>
                                         </ul>
                                     </div>
                                 </div>
-                                <%}%>
                             </div>
                         </div>
 

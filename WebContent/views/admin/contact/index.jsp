@@ -10,7 +10,7 @@
     <div id="page-inner">
         <div class="row">
             <div class="col-md-12">
-                <h2>Quản lý người dùng</h2>
+                <h2>Quản lý liên hệ</h2>
             </div>
         </div>
         <!-- /. ROW  -->
@@ -23,7 +23,7 @@
                         <div class="table-responsive">
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <a href="<%=request.getContextPath() %>" class="btn btn-success btn-md">Thêm</a>
+                                    <a href="#" class="btn btn-success btn-md">Thêm</a>
                                 </div>
                                 <div class="col-sm-6" style="text-align: right;">
                                     <form method="post" action="">
@@ -83,8 +83,9 @@
                                 </thead>
                                 <tbody>
                                 <%
+                                	List<Contact> listCont=null;
                                 	if(request.getAttribute("contList")!=null){
-                                		List<Contact> listCont= (List<Contact>)request.getAttribute("contList");
+                                		listCont= (List<Contact>)request.getAttribute("contList");
                                 		if(listCont.size()>0){
                                 			for(Contact cont:listCont){
                                 				
@@ -97,7 +98,7 @@
                                         <td class="center"><%=cont.getEmail() %></td>
                                         <td class="center"><%=cont.getWebsite()%></td>
                                         <td class="center"><%=cont.getMessage()%></td>
-                                         <td class="center"><a href="" title="" class="btn btn-danger"onclick="return confirm('Bạn có chắc chắn muốn xóa người dùng không?')"><i class="fa fa-pencil"></i> Xóa</a></td>
+                                         <td class="center"><a href="<%=request.getContextPath() %>/admin/contact/del?id=<%=cont.getId()%>" title="" class="btn btn-danger"onclick="return confirm('Bạn có chắc chắn muốn xóa người dùng không?')"><i class="fa fa-pencil"></i> Xóa</a></td>
                                     </tr>
 								<%	
 											}
@@ -107,22 +108,52 @@
                                 </tbody>
                             </table>
                             <div class="row">
+                                <%
+                           		int numberOfPages=(Integer)request.getAttribute("numberOfPages");
+                           		int currentPage=(Integer)request.getAttribute("currentPage");
+                           		if(listCont!= null && listCont.size() > 0 && numberOfPages > 1){
+                           		
+                          	 	
+                            %>
                                 <div class="col-sm-6">
-                                    <div class="dataTables_info" id="dataTables-example_info" style="margin-top:27px">Hiển thị từ 1 đến 5 của 24 truyện</div>
+                                    <div class="dataTables_info" id="dataTables-example_info" style="margin-top:27px">Trang <%=currentPage%>  của <%=numberOfPages %> </div>
                                 </div>
                                 <div class="col-sm-6" style="text-align: right;">
+                               
                                     <div class="dataTables_paginate paging_simple_numbers" id="dataTables-example_paginate">
                                         <ul class="pagination">
-                                            <li class="paginate_button previous disabled" aria-controls="dataTables-example" tabindex="0" id="dataTables-example_previous"><a href="#">Trang trước</a></li>
-                                            <li class="paginate_button active" aria-controls="dataTables-example" tabindex="0"><a href="">1</a></li>
-											<li class="paginate_button" aria-controls="dataTables-example" tabindex="0"><a href="">2</a></li>
-											<li class="paginate_button" aria-controls="dataTables-example" tabindex="0"><a href="">3</a></li>
-											<li class="paginate_button" aria-controls="dataTables-example" tabindex="0"><a href="">4</a></li>
-											<li class="paginate_button" aria-controls="dataTables-example" tabindex="0"><a href="">5</a></li>
-                                            <li class="paginate_button next" aria-controls="dataTables-example" tabindex="0" id="dataTables-example_next"><a href="#">Trang tiếp</a></li>
+                                <%
+    							 	if (currentPage > 1) {
+     								int back = currentPage - 1;
+    							 %>
+                                            <li class="paginate_button previous disabled" aria-controls="dataTables-example" tabindex="0" id="dataTables-example_previous"><a href="<%=request.getContextPath()%>/admin/contact?page=<%=back%>">Trang trước</a></li>
+                                <%
+                                  }
+                                %>
+                                 	<%
+                                        for(int i=1;i<=numberOfPages;i++){
+                                    		if(currentPage==i){
+                                 	 %>
+                                            <li class="paginate_button active" aria-controls="dataTables-example" tabindex="0"><a href="<%=request.getContextPath()%>/admin/contact?page=<%=i%>"><%=i %></a></li>
+									<%
+                                    		}else{
+                                    %>
+                                            <li class="paginate_button " aria-controls="dataTables-example" tabindex="0"><a href="<%=request.getContextPath()%>/admin/contact?page=<%=i%>"><%=i %></a></li>
+                                    		
+                                    <%
+                                    		}
+                                    	}
+                                 	if (currentPage < numberOfPages) {
+                                		int next = currentPage + 1;
+									%>		
+                                            <li class="paginate_button next" aria-controls="dataTables-example" tabindex="0" id="dataTables-example_next"><a href="<%=request.getContextPath()%>/admin/contact?page=<%=next%>">Trang tiếp</a></li>
+                                     <%
+    										}
+   									  %>
                                         </ul>
                                     </div>
                                 </div>
+                                <%}%>
                             </div>
                         </div>
 

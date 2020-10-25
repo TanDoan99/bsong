@@ -6,14 +6,14 @@
 <div class="content_resize">
   <div class="mainbar">
   <%
+  ArrayList<Song> listSong=null;
   	if(request.getAttribute("listSong")!=null){
   		int cat_id = 0;
-  		ArrayList<Song> listSong=(ArrayList<Song>)request.getAttribute("listSong");
+  		 listSong=(ArrayList<Song>)request.getAttribute("listSong");
   		SongDAO songDAO=new SongDAO();
-  			if(listSong.size()>0){
   				for(Song song:listSong){
   					cat_id=songDAO.findCatIdIndex(song.getId());
-  					
+  					String urlSlug=request.getContextPath()+"/chi-tiet/"+StringUtil.makeSlug(song.getName())+"-"+song.getId() + "-" + song.getCat().getId() + ".html";
   	
   %>
     <div class="article">
@@ -23,22 +23,46 @@
       <div class="img"><img src="<%=request.getContextPath()%>/uploads/images/<%=song.getPicture()%>" width="177" height="213" alt="<%=song.getName() %>" class="fl" /></div>
       <div class="post_content">
         <p><%=song.getDescription() %></p>
-        <p class="spec"><a href="<%=request.getContextPath()%>/detail?id=<%=song.getId()%>&&cat_id=<%=cat_id %>" class="rm">Chi tiết &raquo;</a></p>
+        <p class="spec"><a href="<%=urlSlug%>" class="rm">Chi tiết &raquo;</a></p>
       </div>
       <div class="clr"></div>
     </div>
     <%
-  				}
   	  		}
   	  	} 
+   
+   	int numberOfPages=(Integer)request.getAttribute("numberOfPages");
+   	int currentPage=(Integer)request.getAttribute("currentPage");
+   	if(listSong != null && listSong.size() > 0 && numberOfPages > 1){
+   %>
+    <p class="pages"><small>Trang  <%=currentPage %> của <%=numberOfPages %></small>
+     <%
+     	if (currentPage > 1) {
+     		int back = currentPage - 1;
+     %>
+     <a href="<%=request.getContextPath()%>/index?page=<%=back%>">&laquo;</a>	
+     <%
+     	}
+    	for(int i=1;i<=numberOfPages;i++){
+    		if(currentPage==i){
     %>
-    <p class="pages"><small>Trang 1 của 5</small>
-    <span>1</span>
-    <a href="">2</a>
-    <a href="">3</a>
-    <a href="">4</a>
-    <a href="">5</a>
-    <a href="#">&raquo;</a></p>
+    <span><%=i %></span>
+    <%
+    		} else {
+    %>
+    <a href="<%=request.getContextPath()%>/index?page=<%=i%>"><%=i %></a>
+     <%
+    	 	}
+    	}
+    	if (currentPage < numberOfPages) {
+    		int next = currentPage + 1;
+    %>
+    <a href="<%=request.getContextPath()%>/index?page=<%=next%>">&raquo;</a></p>
+    <%
+    	}
+     %>
+    
+   <%} %>
   </div>
   <div class="sidebar">
       <%@ include file="/templates/public/inc/leftbar.jsp" %>

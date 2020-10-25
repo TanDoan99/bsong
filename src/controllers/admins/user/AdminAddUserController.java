@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import daos.UserDAO;
 import models.User;
+import utils.AuthUtil;
 import utils.StringUtil;
 public class AdminAddUserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -20,6 +21,10 @@ public class AdminAddUserController extends HttpServlet {
 		response.setContentType("text/html");
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
+		if(!AuthUtil.checkLogin(request, response)) {
+			response.sendRedirect(request.getContextPath()+"/auth/login");
+			return;
+		}
 		RequestDispatcher rd=request.getRequestDispatcher("/views/admin/user/add.jsp");
 		rd.forward(request, response);
 	}
@@ -27,6 +32,10 @@ public class AdminAddUserController extends HttpServlet {
 		response.setContentType("text/html");
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
+		if(!AuthUtil.checkLogin(request, response)) {
+			response.sendRedirect(request.getContextPath()+"/auth/login");
+			return;
+		}
 		UserDAO userDAO=new UserDAO();
 		String username=request.getParameter("username");
 		String password=request.getParameter("password");

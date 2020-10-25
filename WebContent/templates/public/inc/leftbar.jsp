@@ -1,12 +1,16 @@
+<%@page import="models.Song"%>
+<%@page import="java.util.List"%>
+<%@page import="daos.SongDAO"%>
+<%@page import="utils.StringUtil"%>
 <%@page import="daos.CatDAO"%>
 <%@page import="models.Category"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <div class="searchform">
-  <form id="formsearch" name="formsearch" method="post" action="#">
+  <form id="formsearch" name="formsearch" method="get" action="<%=request.getContextPath()%>/search">
     <span>
-    <input name="editbox_search" class="editbox_search" id="editbox_search" maxlength="80" value="Tìm kiếm bài hát" type="text" />
+    <input name="editbox_search" class="editbox_search" id="editbox_search" maxlength="80" placeholder="Tìm kiếm bài hát" type="text" />
     </span>
     <input name="button_search" src="<%=request.getContextPath()%>/templates/public/images/search.jpg" class="button_search" type="image" />
   </form>
@@ -22,9 +26,10 @@
         	
           for(Category objCat:catList){
           	String catName=objCat.getName();
+          	String urlSlug = request.getContextPath()+"/danh-muc/"+StringUtil.makeSlug(objCat.getName())+"-"+objCat.getId()+".html";
   %>
   <ul class="sb_menu">
-    <li><a href="<%=request.getContextPath()%>/cat?id=<%=objCat.getId()%>"><%=catName%></a></li>
+    <li><a href="<%=urlSlug%>"><%=catName%></a></li>
     
   </ul>
   <%
@@ -37,17 +42,18 @@
   <h2 class="star"><span>Bài hát mới</span></h2>
   <div class="clr"></div>
   <ul class="ex_menu">
-    <li><a href="#">Mùa Đã Xa (Single)</a><br />
-      Donec libero. Suspendisse bibendum</li>
-    <li><a href="#">Chúng Ta Là Bạn Bè</a><br />
-      Phasellus suscipit, leo a pharetra</li>
-    <li><a href="#">Có Một Người Để Yêu</a><br />
-      Tellus eleifend magna eget</li>
-    <li><a href="#">Chuyện tình Lan và Điệp</a><br />
-      Curabitur vel urna in tristique</li>
-    <li><a href="#">Xanh tươi Việt Nam</a><br />
-      Cras id urna orbi tincidunt orci ac</li>
-    <li><a href="#">Tuổi hồng</a><br />
-      purus nec placerat bibendum</li>
+    <%
+  SongDAO songDAO = new SongDAO();
+  List<Song> listRecentSong = songDAO.findNewPosts(5);
+  if(listRecentSong.size()>0){
+	  for(Song item : listRecentSong){
+		  String urlSlug=request.getContextPath()+"/chi-tiet/"+StringUtil.makeSlug(item.getName())+"-"+item.getId() + "-" + item.getCat().getId() + ".html";
+  %>
+    <li><a href="<%=urlSlug%>"><%=item.getName() %></a><br />
+      <%if(item.getDescription().length()>40) out.print(item.getDescription().substring(0, 40)+"..."); else out.print(item.getDescription()); %></li>
+    <%
+		  }
+	  }
+    %>
   </ul>
 </div>

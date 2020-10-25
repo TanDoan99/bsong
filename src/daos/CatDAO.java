@@ -7,6 +7,7 @@ import java.util.List;
 import models.Category;
 import models.Song;
 import utils.DBConnectionUtil;
+import utils.DefineUtil;
 
 public class CatDAO extends AbstractDAO{
 	public List<Category> findAll(){
@@ -29,6 +30,7 @@ public class CatDAO extends AbstractDAO{
 		return list;
 		
 	}
+	
 
 	public int add( Category cat ) {
 		int result=0;
@@ -136,6 +138,28 @@ public class CatDAO extends AbstractDAO{
 			DBConnectionUtil.close(rs, pst, con);
 		}
 		return list;
+	}
+
+	public List<Category> getItemPagination(int offset) {
+		con = DBConnectionUtil.getConnection();
+		String sql = "SELECT * FROM  categories ORDER BY id DESC LIMIT ?, ? ";
+		List<Category> listItems = new ArrayList<>();
+		try {
+			pst=con.prepareStatement(sql);
+			pst.setInt(1,offset );
+			pst.setInt(2, DefineUtil.NUMBER_PER_PAGE);
+			rs=pst.executeQuery();
+			while(rs.next()) {
+				Category cat = new Category(rs.getInt("id"), rs.getString("name"));
+				listItems.add(cat);
+			} ;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		
+		}finally {
+			DBConnectionUtil.close(rs, pst, con);
+		}
+		return listItems;
 	}
 
 

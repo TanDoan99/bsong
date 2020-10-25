@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import daos.UserDAO;
 import models.User;
+import utils.AuthUtil;
 import utils.StringUtil;
 
 public class AdminEditUserController extends HttpServlet {
@@ -21,11 +22,15 @@ public class AdminEditUserController extends HttpServlet {
 		response.setContentType("text/html");
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
+		if(!AuthUtil.checkLogin(request, response)) {
+			response.sendRedirect(request.getContextPath()+"/auth/login");
+			return;
+		}
 		int id=0;
 		try {
 			id=Integer.parseInt(request.getParameter("id"));
 		} catch (Exception e) {
-			response.sendRedirect(request.getContextPath()+"/admin/user?err=1");
+			response.sendRedirect(request.getContextPath()+"/404");
 			return;
 		}
 		UserDAO userDAO=new UserDAO();

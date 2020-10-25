@@ -26,6 +26,7 @@ public class PublicDetailController extends HttpServlet {
 			id = Integer.parseInt(request.getParameter("id"));
 		} catch (Exception e) {
 			response.sendRedirect(request.getContextPath()+"/404");
+			return;
 		}
 		int cat_id = Integer.parseInt(request.getParameter("cat_id"));
 		SongDAO songDAO = new SongDAO();

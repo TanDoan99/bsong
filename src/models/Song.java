@@ -45,8 +45,11 @@ public class Song {
 		this.picture = picture;
 		this.cat = cat;
 	}
-	
-	
+	public Song(String name, Category cat) {
+		super();
+		this.name = name;
+		this.cat = cat;
+	}
 	
 	
 }

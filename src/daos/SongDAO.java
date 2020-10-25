@@ -48,7 +48,7 @@ public class SongDAO extends AbstractDAO {
 	public List<Song> findAll() {
 		List<Song> listSong=new ArrayList<>();
 		con=DBConnectionUtil.getConnection();
-		String sql="SELECT * FROM songs ORDER BY id DESC";
+		String sql="SELECT * FROM songs ORDER BY id ASC";
 		try {
 			st=con.createStatement();
 			rs=st.executeQuery(sql);
@@ -63,6 +63,77 @@ public class SongDAO extends AbstractDAO {
 			DBConnectionUtil.close(rs, st, con);
 		}
 		return listSong;
+		
+	}
+	public List<Song> findAllByIdAndNameOrderByNewsId(Song song) {
+		List<Song> listSong=null;
+		con=DBConnectionUtil.getConnection();
+		String sql="SELECT s.id, "
+				+"s.name AS songName, "
+				+"s.previews_text, "
+				+"s.detail_text, "
+				+"s.detail_text, "
+				+"s.picture, "
+				+"s.date_create, "
+				+"s.counter, "
+				+"s.cat_id, "
+				+"c.name AS catName, "
+				+"FROM songs AS s "
+				+"INNER JOIN categories AS c "
+				+"ON c.id = s.cat_id WHERE 1 ";
+				//+"ORDER BY s.id DESC";
+		if(!"".equals(song.getName())){
+			sql+= " AND s.name LIKE ? ";
+		}
+		try {
+			pst=con.prepareStatement(sql);
+			if(!"".equals(song.getName())){
+			pst.setString(1, "%" +song.getName() +"%");
+			}
+			rs=pst.executeQuery();
+			while(rs.next()) {
+				Song songs= new Song(
+						rs.getInt("id"),
+						rs.getString("songName"), 
+						rs.getString("preview_text"), 
+						rs.getString("detail_text"), 
+						rs.getString("picture"), 
+						rs.getTimestamp("date_create"), 
+						rs.getInt("counter"),
+						new Category(rs.getInt("cat_id"),
+								rs.getString("catName")));
+				listSong= new ArrayList<>();
+				listSong.add(songs);
+			} ;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		
+		}finally {
+			DBConnectionUtil.close(rs, pst, con);
+		}
+		return listSong;
+		
+	}
+	public List<Song> findNewPosts(int number) {
+		con = DBConnectionUtil.getConnection();
+		String sql = "SELECT s.*, c.name AS cName FROM songs s JOIN categories c ON s.cat_id = c.id ORDER BY id DESC LIMIT ?";
+		List<Song> listItems = new ArrayList<>();
+		try {
+			pst = con.prepareStatement(sql);
+			pst.setInt(1, number);
+			rs = pst.executeQuery();
+			while (rs.next()) {
+				Song ObjItem = new Song(rs.getInt("id"), rs.getString("name"), rs.getString("preview_text"),
+						rs.getString("detail_text"), rs.getString("picture"), rs.getTimestamp("date_create"),
+						rs.getInt("counter"), new Category(rs.getInt("cat_id"), rs.getString("cName")));
+				listItems.add(ObjItem);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBConnectionUtil.close(rs, pst, con);
+		}
+		return listItems;
 		
 	}
 
@@ -368,6 +439,80 @@ public class SongDAO extends AbstractDAO {
 			DBConnectionUtil.close(rs, pst, con);
 		}
 		return song;
+	}
+
+	public List<Song> getItemPagination(int offset) {
+		con = DBConnectionUtil.getConnection();
+		String sql = "SELECT s.*, c.name AS catName FROM songs s JOIN categories c ON s.cat_id = c.id ORDER BY id DESC LIMIT ?, ?";
+		List<Song> listItems = new ArrayList<>();
+		try {
+			pst=con.prepareStatement(sql);
+			pst.setInt(1,offset );
+			pst.setInt(2, DefineUtil.NUMBER_PER_PAGE);
+			rs=pst.executeQuery();
+			while(rs.next()) {
+				Song song = new Song(rs.getInt("id"), rs.getString("name"), rs.getString("preview_text"),
+						rs.getString("detail_text"),rs.getString("picture"), rs.getTimestamp("date_create"), 
+						rs.getInt("counter"),new Category(rs.getInt("cat_id"), rs.getString("catName")));
+				listItems.add(song);
+			} ;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		
+		}finally {
+			DBConnectionUtil.close(rs, pst, con);
+		}
+		return listItems;
+	}
+
+	public ArrayList<Song> searchSong(String s) {
+		Song song = null;
+		ArrayList<Song> listSong = new ArrayList<Song>();
+		con = DBConnectionUtil.getConnection();
+		String sql = "SELECT * FROM songs WHERE name LIKE '%"+s+"%'";
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery(sql);
+			while(rs.next()) {
+				song = new Song(rs.getInt("id"), rs.getString("name"), rs.getString("preview_text"), rs.getString("detail_text"), rs.getString("picture"), rs.getTimestamp("date_create"), rs.getInt("counter"), new Category(rs.getInt("cat_id")));
+				listSong.add(song);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		} finally {
+			DBConnectionUtil.close(rs, pst, con);
+		}
+		return listSong;
+	}
+
+	public ArrayList<Song> searchSongAdmin(String search) {
+		ArrayList<Song> searchList = new ArrayList<Song>();
+		con = DBConnectionUtil.getConnection();
+		String sql = "SELECT songs.*,categories.name AS catName FROM songs"
+				+ " INNER JOIN categories"
+				+ " ON songs.cat_id = categories.id"
+				+ " WHERE songs.name"
+				+ " LIKE ?"
+				+ " ORDER BY songs.id DESC";
+		try {
+			pst = con.prepareStatement(sql);
+			pst.setString(1, "%"+search+"%");
+			rs = pst.executeQuery();
+			while(rs.next()) {
+				Song objSong = new Song(rs.getInt("id"), 
+						rs.getString("name"), 
+						rs.getString("preview_text"), 
+						rs.getString("detail_text"),
+						rs.getString("picture"), 
+						rs.getTimestamp("date_create"),
+						rs.getInt("counter"), 
+						new Category(rs.getInt("cat_id"), rs.getString("catName")));
+				searchList.add(objSong);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return searchList;
 	}
 
 	

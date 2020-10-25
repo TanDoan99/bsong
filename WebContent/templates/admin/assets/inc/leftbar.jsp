@@ -22,7 +22,7 @@
                 <a id="user" href="<%=request.getContextPath() %>/admin/user"><i class="fa fa-user fa-3x"></i> Quản lý người dùng</a>
             </li>
             <li>
-                <a id="contact" href=""><i class="fa fa-envelope fa-3x"></i> Quản lý liên hệ</a>
+                <a id="contact" href="<%=request.getContextPath() %>/admin/contact"><i class="fa fa-envelope fa-3x"></i> Quản lý liên hệ</a>
             </li>
         </ul>
     </div>

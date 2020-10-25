@@ -47,13 +47,11 @@ public class PublicCatController extends HttpServlet {
 		}
 		int offset=(currentPage-1)*DefineUtil.NUMBER_PER_PAGE;
 		List<Song> listCatSongPage=songDAO.getItemIdCatPagination(offset,id);
-		List<Song> listCatSong=songDAO.getItemIdCat(id);
 		request.setAttribute("numberOfPages", numberOfPages);
 		request.setAttribute("currentPage", currentPage);
 		request.setAttribute("cat_id", cat_id);
 		request.setAttribute("cat", cat);
 		request.setAttribute("listCatSongPage", listCatSongPage);
-		request.setAttribute("listCatSong", listCatSong);
 		request.getRequestDispatcher("/views/public/cat.jsp").forward(request, response);
 	}
 

@@ -28,15 +28,15 @@ public class StringUtil {
 		Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
 		slug = pattern.matcher(slug).replaceAll("");
 		slug = slug.toLowerCase();
-		// Thay Ä‘ thÃ nh d
-		slug = slug.replaceAll("Ä‘", "d");
-		// XÃ³a cÃ¡c kÃ½ tá»± Ä‘áº·t biá»‡t
+		//thay đổi thành d
+		slug = slug.replaceAll("Ã„â€˜", "d");
+		// XÃƒÂ³a cÃƒÂ¡c kÃƒÂ½ tÃ¡Â»Â± Ã„â€˜Ã¡ÂºÂ·t biÃ¡Â»â€¡t
 		slug = slug.replaceAll("([^0-9a-z-\\s])", "");
-		// Thay space thÃ nh dáº¥u gáº¡ch ngang
+		// Thay space thÃƒÂ nh dÃ¡ÂºÂ¥u gÃ¡ÂºÂ¡ch ngang
 		slug = slug.replaceAll("[\\s]", "-");
-		// Ä�á»•i nhiá»�u kÃ½ tá»± gáº¡ch ngang liÃªn tiáº¿p thÃ nh 1 kÃ½ tá»± gáº¡ch ngang
+		// Ã„ï¿½Ã¡Â»â€¢i nhiÃ¡Â»ï¿½u kÃƒÂ½ tÃ¡Â»Â± gÃ¡ÂºÂ¡ch ngang liÃƒÂªn tiÃ¡ÂºÂ¿p thÃƒÂ nh 1 kÃƒÂ½ tÃ¡Â»Â± gÃ¡ÂºÂ¡ch ngang
 		slug = slug.replaceAll("(-+)", "-");
-		// XÃ³a cÃ¡c kÃ½ tá»± gáº¡ch ngang á»Ÿ Ä‘áº§u vÃ  cuá»‘i
+		// XÃƒÂ³a cÃƒÂ¡c kÃƒÂ½ tÃ¡Â»Â± gÃ¡ÂºÂ¡ch ngang Ã¡Â»Å¸ Ã„â€˜Ã¡ÂºÂ§u vÃƒÂ  cuÃ¡Â»â€˜i
 		slug = slug.replaceAll("^-+", "");
 		slug = slug.replaceAll("-+$", "");
 		return slug;

@@ -14,6 +14,7 @@ import daos.CatDAO;
 import daos.SongDAO;
 import models.Category;
 import models.Song;
+import utils.AuthUtil;
 import utils.FileUtil;
 
 @MultipartConfig
@@ -32,6 +33,10 @@ public class AdminAddSongController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
+		if(!AuthUtil.checkLogin(request, response)) {
+			response.sendRedirect(request.getContextPath()+"/auth/login");
+			return;
+		}
 		SongDAO songDAO=new SongDAO();
 		String name=request.getParameter("name");
 		String des=request.getParameter("preview");

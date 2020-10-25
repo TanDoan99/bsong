@@ -4,10 +4,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import models.Category;
-import models.Song;
 import models.User;
 import utils.DBConnectionUtil;
+import utils.DefineUtil;
 
 public class UserDAO extends AbstractDAO {
 
@@ -157,5 +156,27 @@ public class UserDAO extends AbstractDAO {
 			DBConnectionUtil.close(rs, pst, con);
 		}
 		return user;
+	}
+
+	public List<User> getItemPagination(int offset) {
+		con = DBConnectionUtil.getConnection();
+		String sql = "SELECT * FROM  users ORDER BY id DESC LIMIT ?, ? ";
+		List<User> listItems = new ArrayList<>();
+		try {
+			pst=con.prepareStatement(sql);
+			pst.setInt(1,offset );
+			pst.setInt(2, DefineUtil.NUMBER_PER_PAGE);
+			rs=pst.executeQuery();
+			while(rs.next()) {
+				User us = new User(rs.getInt("id"), rs.getString("username"), rs.getString("password"), rs.getString("fullname"));
+				listItems.add(us);
+			} ;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		
+		}finally {
+			DBConnectionUtil.close(rs, pst, con);
+		}
+		return listItems;
 	}
 }

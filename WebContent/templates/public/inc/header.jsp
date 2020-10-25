@@ -20,7 +20,7 @@
       </div>
       <div class="menu_nav">
         <ul>
-          <li class="active"><a href=""><span>Trang chủ</span></a>
+          <li class="active"><a href="<%=request.getContextPath()%>/index"><span>Trang chủ</span></a>
           <li><a href="<%=request.getContextPath()%>/contact"><span>Liên hệ</span></a></li>
         </ul>
       </div>

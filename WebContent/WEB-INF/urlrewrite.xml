@@ -1,0 +1,17 @@
+<urlrewrite>
+	<rule>
+		<from>/danh-muc/(.*)-([0-9]*).html</from>
+		<to>/cat?id=$2</to>
+		<!-- bieu thuc chinh qui ^ : bat dau; $ : ket thuc; [a-zA-Z] : bieu thuc 
+			chua cac ki tu tu a den z ;.* : dai dien khung hoac nhieu ki tu bat ki ;+* 
+			: dai dien mot hoac nhieu ki tu ;[0-9] : dai dien cac tu 0 den 9; -->
+	</rule>
+	<rule>
+		<from>/chi-tiet/(.*)-([0-9]*)-([0-9]*).html</from>
+		<to>/detail?id=$2&amp;cat_id=$3</to>
+	</rule>
+	<rule>
+		<from>/danh-muc/(.*)-([0-9]*)/pages-([0-9]*).html</from>
+		<to>/cat?id=$2&amp;page=$3</to>
+	</rule>
+</urlrewrite>

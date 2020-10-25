@@ -81,9 +81,9 @@
                                 </thead>
                                 <tbody>
                                 <%
+                                ArrayList<Category> catList=null; 
                                 	if(request.getAttribute("catList")!=null){
-                                         ArrayList<Category> catList=(ArrayList<Category>)request.getAttribute("catList");
-                                            if(catList.size()>0){
+                                       catList=(ArrayList<Category>)request.getAttribute("catList");
                                              for(Category cat:catList){
                                              	String name =cat.getName();
                                 %>
@@ -96,29 +96,58 @@
                                         </td>
                                     </tr>
 									<%
-                                			}
                                 		}
                                 	}
 									%>
                                 </tbody>
                             </table>
                             <div class="row">
+                            <%
+                           		int numberOfPages=(Integer)request.getAttribute("numberOfPages");
+                           		int currentPage=(Integer)request.getAttribute("currentPage");
+                           		if(catList != null && catList.size() > 0 && numberOfPages > 1){
+                           		
+                          	 	
+                            %>
                                 <div class="col-sm-6">
-                                    <div class="dataTables_info" id="dataTables-example_info" style="margin-top:27px">Hiển thị từ 1 đến 5 của 24 truyện</div>
+                                    <div class="dataTables_info" id="dataTables-example_info" style="margin-top:27px">Trang <%=currentPage%>  của <%=numberOfPages %> </div>
                                 </div>
                                 <div class="col-sm-6" style="text-align: right;">
+                               
                                     <div class="dataTables_paginate paging_simple_numbers" id="dataTables-example_paginate">
                                         <ul class="pagination">
-                                            <li class="paginate_button previous disabled" aria-controls="dataTables-example" tabindex="0" id="dataTables-example_previous"><a href="#">Trang trước</a></li>
-                                            <li class="paginate_button active" aria-controls="dataTables-example" tabindex="0"><a href="">1</a></li>
-											<li class="paginate_button" aria-controls="dataTables-example" tabindex="0"><a href="">2</a></li>
-											<li class="paginate_button" aria-controls="dataTables-example" tabindex="0"><a href="">3</a></li>
-											<li class="paginate_button" aria-controls="dataTables-example" tabindex="0"><a href="">4</a></li>
-											<li class="paginate_button" aria-controls="dataTables-example" tabindex="0"><a href="">5</a></li>
-                                            <li class="paginate_button next" aria-controls="dataTables-example" tabindex="0" id="dataTables-example_next"><a href="#">Trang tiếp</a></li>
+                                <%
+    							 	if (currentPage > 1) {
+     								int back = currentPage - 1;
+    							 %>
+                                            <li class="paginate_button previous disabled" aria-controls="dataTables-example" tabindex="0" id="dataTables-example_previous"><a href="<%=request.getContextPath()%>/admin/cat/index?page=<%=back%>">Trang trước</a></li>
+                                <%
+                                  }
+                                %>
+                                 	<%
+                                        for(int i=1;i<=numberOfPages;i++){
+                                    		if(currentPage==i){
+                                 	 %>
+                                            <li class="paginate_button active" aria-controls="dataTables-example" tabindex="0"><a href="<%=request.getContextPath()%>/admin/cat/index?page=<%=i%>"><%=i %></a></li>
+									<%
+                                    		}else{
+                                    %>
+                                            <li class="paginate_button " aria-controls="dataTables-example" tabindex="0"><a href="<%=request.getContextPath()%>/admin/cat/index?page=<%=i%>"><%=i %></a></li>
+                                    		
+                                    <%
+                                    		}
+                                    	}
+                                 	if (currentPage < numberOfPages) {
+                                		int next = currentPage + 1;
+									%>		
+                                            <li class="paginate_button next" aria-controls="dataTables-example" tabindex="0" id="dataTables-example_next"><a href="<%=request.getContextPath()%>/admin/cat/index?page=<%=next%>">Trang tiếp</a></li>
+                                     <%
+    										}
+   									  %>
                                         </ul>
                                     </div>
                                 </div>
+                                <%}%>
                             </div>
                         </div>
 

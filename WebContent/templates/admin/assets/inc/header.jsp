@@ -35,7 +35,9 @@
             		User user=(User)session.getAttribute("userInfo");
             	
             %>
-            <div style="color: white;padding: 15px 50px 5px 50px;float: right;font-size: 16px;"> Xin chào, <b><%=user.getUsername()%></b> &nbsp; <a href="<%=request.getContextPath() %>/auth/logout" class="btn btn-danger square-btn-adjust">Đăng xuất</a> </div>
+            <div style="color: white;padding: 15px 50px 5px 50px;float: right;font-size: 16px;"> Xin chào, <b><%=user.getFullname()%></b> &nbsp; <a href="<%=request.getContextPath() %>/auth/logout" class="btn btn-danger square-btn-adjust">Đăng xuất</a> </div>
+        	<%}else{ %>
+        	   <div style="color: white;padding: 15px 50px 5px 50px;float: right;font-size: 16px;"> Xin chào, <b>Người dùng</b> &nbsp; <a href="<%=request.getContextPath() %>/auth/login" class="btn btn-danger square-btn-adjust">Đăng nhập</a> </div>
         	<%} %>
         </nav>
         <!-- /. NAV TOP  -->

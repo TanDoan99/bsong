@@ -6,6 +6,7 @@ import java.util.List;
 
 import models.Contact;
 import utils.DBConnectionUtil;
+import utils.DefineUtil;
 
 public class ContactDAO extends AbstractDAO {
 
@@ -47,6 +48,45 @@ public class ContactDAO extends AbstractDAO {
 			DBConnectionUtil.close(rs, st, con);
 		}
 		return listContact;
+	}
+
+	public int del(int id) {
+		int result=0;
+		con=DBConnectionUtil.getConnection();
+		String sql="DELETE FROM contacts WHERE id=?";
+		try {
+			pst=con.prepareStatement(sql);
+			pst.setInt(1,id);
+			result=pst.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			DBConnectionUtil.close(rs, pst, con);
+		}
+		return result;
+	}
+
+	public List<Contact> getItemPagination(int offset) {
+		con = DBConnectionUtil.getConnection();
+		String sql = "SELECT * FROM contacts ORDER BY id DESC LIMIT ?, ? ";
+		List<Contact> listItems = new ArrayList<>();
+		try {
+			pst=con.prepareStatement(sql);
+			pst.setInt(1,offset );
+			pst.setInt(2, DefineUtil.NUMBER_PER_PAGE);
+			rs=pst.executeQuery();
+			while(rs.next()) {
+				Contact cont = new Contact(rs.getInt("id"), rs.getString("name"),rs.getString("website"), rs.getString("email"), rs.getString("message"));
+				listItems.add(cont);
+			} ;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		
+		}finally {
+			DBConnectionUtil.close(rs, pst, con);
+		}
+		return listItems;
 	}
 
 }

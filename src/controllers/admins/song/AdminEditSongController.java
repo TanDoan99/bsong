@@ -14,6 +14,7 @@ import daos.CatDAO;
 import daos.SongDAO;
 import models.Category;
 import models.Song;
+import utils.AuthUtil;
 import utils.FileUtil;
 
 @MultipartConfig
@@ -27,10 +28,13 @@ public class AdminEditSongController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		if(!AuthUtil.checkLogin(request, response)) {
+			response.sendRedirect(request.getContextPath()+"/auth/login");
+			return;
+		}
 		int id = 0;
 		try {
 			id = Integer.parseInt(request.getParameter("id"));
-			System.out.println(id);
 		} catch (Exception e) {
 			response.sendRedirect(request.getContextPath() + "/admin/song/edit?err=3");
 			return;

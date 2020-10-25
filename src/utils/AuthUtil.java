@@ -10,7 +10,7 @@ public class AuthUtil {
 	
 	public static boolean checkLogin(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		HttpSession session = request.getSession();
-		if (session.getAttribute("userLogin") == null) {
+		if (session.getAttribute("userInfo") == null) {
 			return false;
 		}
 		return true;
