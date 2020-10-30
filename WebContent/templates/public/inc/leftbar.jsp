@@ -10,7 +10,7 @@
 <div class="searchform">
   <form id="formsearch" name="formsearch" method="get" action="<%=request.getContextPath()%>/search">
     <span>
-    <input name="editbox_search" class="editbox_search" id="editbox_search" maxlength="80" placeholder="Tìm kiếm bài hát" type="text" />
+    <input value="<%if(request.getParameter("editbox_search")!=null)out.print(request.getParameter("editbox_search")); %>" name="editbox_search" class="editbox_search" id="editbox_search" maxlength="80" placeholder="Tìm kiếm bài hát" type="text" />
     </span>
     <input name="button_search" src="<%=request.getContextPath()%>/templates/public/images/search.jpg" class="button_search" type="image" />
   </form>

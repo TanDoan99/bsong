@@ -20,16 +20,14 @@
                     <div class="panel-body">
                         <div class="table-responsive">
                             <div class="row">
-                                <div class="col-sm-6">
+                                <div class="col-sm-6" style="margin-bottom: 10px;">
                                     <a href="<%=request.getContextPath()%>/admin/cat/add" class="btn btn-success btn-md">Thêm</a>
                                 </div>
-                                <div class="col-sm-6" style="text-align: right;">
-                                    <form method="post" action="">
-                                        <input type="submit" name="search" value="Tìm kiếm" class="btn btn-warning btn-sm" style="float:right" />
-                                        <input type="search" class="form-control input-sm" placeholder="Nhập tên bài hát" style="float:right; width: 300px;" />
-                                        <div style="clear:both"></div>
-                                    </form><br />
-                                </div>
+                                 <form method="get" action="<%=request.getContextPath()%>/admin/cat/index">
+                                
+                            	<input value="<%if(request.getParameter("sname")!=null) out.print(request.getParameter("sname")); %>" type="search" class="form-control input-sm" placeholder="Nhập tên danh mục" name="snames" style="float:right; width: 200px;" />
+							    <input type="submit" name="search" value="Tìm kiếm" class="btn btn-warning btn-sm" style="float:right;  margin-right:20px;" />
+                                </form>
                             </div>
 							<%
 								String msg = (String) request.getParameter("msg");
@@ -79,11 +77,12 @@
                                         <th width="160px">Chức năng</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody >
                                 <%
                                 ArrayList<Category> catList=null; 
                                 	if(request.getAttribute("catList")!=null){
                                        catList=(ArrayList<Category>)request.getAttribute("catList");
+                                       if(catList.size()>0){
                                              for(Category cat:catList){
                                              	String name =cat.getName();
                                 %>
@@ -96,6 +95,7 @@
                                         </td>
                                     </tr>
 									<%
+                                             }
                                 		}
                                 	}
 									%>

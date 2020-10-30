@@ -66,30 +66,42 @@ public class SongDAO extends AbstractDAO {
 		
 	}
 	public List<Song> findAllByIdAndNameOrderByNewsId(Song song) {
-		List<Song> listSong=null;
+		List<Song> listSong = new ArrayList<Song>();
 		con=DBConnectionUtil.getConnection();
+		//String sql2 = "SELECT * FROM songs INNER JOIN categories ON categories.id = songs.cat_id WHERE 1";
 		String sql="SELECT s.id, "
 				+"s.name AS songName, "
-				+"s.previews_text, "
+				+"s.preview_text, "
 				+"s.detail_text, "
 				+"s.detail_text, "
-				+"s.picture, "
 				+"s.date_create, "
+				+"s.picture, "
 				+"s.counter, "
 				+"s.cat_id, "
-				+"c.name AS catName, "
+				+"c.name AS catName "
 				+"FROM songs AS s "
 				+"INNER JOIN categories AS c "
 				+"ON c.id = s.cat_id WHERE 1 ";
 				//+"ORDER BY s.id DESC";
 		if(!"".equals(song.getName())){
-			sql+= " AND s.name LIKE ? ";
+			sql += " AND s.name LIKE ? ";
+		}
+		if(song.getCat().getId() > 0){
+			sql += " AND s.cat_id = ? ";
 		}
 		try {
 			pst=con.prepareStatement(sql);
-			if(!"".equals(song.getName())){
-			pst.setString(1, "%" +song.getName() +"%");
+			if(song.getCat().getId() > 0 && !"".equals(song.getName())){
+				pst.setString(1, "%" +song.getName() +"%");
+				pst.setInt(2, song.getCat().getId());
+			}else {
+				if(!"".equals(song.getName())&& song.getCat().getId()==0) {
+					pst.setString(1, "%" +song.getName() +"%");
+				}else if( "".equals(song.getName()) && song.getCat().getId() > 0) {
+					pst.setInt(1, song.getCat().getId());
+				}
 			}
+				
 			rs=pst.executeQuery();
 			while(rs.next()) {
 				Song songs= new Song(
@@ -102,12 +114,11 @@ public class SongDAO extends AbstractDAO {
 						rs.getInt("counter"),
 						new Category(rs.getInt("cat_id"),
 								rs.getString("catName")));
-				listSong= new ArrayList<>();
 				listSong.add(songs);
-			} ;
+			} 
+			System.out.println(listSong.size());
 		} catch (SQLException e) {
 			e.printStackTrace();
-		
 		}finally {
 			DBConnectionUtil.close(rs, pst, con);
 		}
@@ -484,37 +495,17 @@ public class SongDAO extends AbstractDAO {
 		}
 		return listSong;
 	}
-
-	public ArrayList<Song> searchSongAdmin(String search) {
-		ArrayList<Song> searchList = new ArrayList<Song>();
+	public int countId(int id) {
+		int result = 0;
 		con = DBConnectionUtil.getConnection();
-		String sql = "SELECT songs.*,categories.name AS catName FROM songs"
-				+ " INNER JOIN categories"
-				+ " ON songs.cat_id = categories.id"
-				+ " WHERE songs.name"
-				+ " LIKE ?"
-				+ " ORDER BY songs.id DESC";
+		String sql = "UPDATE songs SET counter = counter + 1 WHERE id = ?";
 		try {
 			pst = con.prepareStatement(sql);
-			pst.setString(1, "%"+search+"%");
-			rs = pst.executeQuery();
-			while(rs.next()) {
-				Song objSong = new Song(rs.getInt("id"), 
-						rs.getString("name"), 
-						rs.getString("preview_text"), 
-						rs.getString("detail_text"),
-						rs.getString("picture"), 
-						rs.getTimestamp("date_create"),
-						rs.getInt("counter"), 
-						new Category(rs.getInt("cat_id"), rs.getString("catName")));
-				searchList.add(objSong);
-			}
+			pst.setInt(1, id);
+			result = pst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return searchList;
+		return result;
 	}
-
-	
-
 }

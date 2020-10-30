@@ -1,4 +1,5 @@
-﻿<%@page import="models.Category"%>
+﻿<%@page import="daos.SongDAO"%>
+<%@page import="models.Category"%>
 <%@page import="java.net.URI"%>
 <%@page import="java.awt.Desktop"%>
 <%@page import="models.Song"%>
@@ -28,10 +29,24 @@
                                     <a href="<%=request.getContextPath() %>/admin/song/add" class="btn btn-success btn-md">Thêm</a>
                                 </div>
                                 <div class="col-sm-6" style="text-align: right;">
-                                    <form method="get" action="<%=request.getContextPath()%>/admin/song/search">
-                                        <input type="search" class="form-control input-sm" placeholder="Nhập tên bài hát"name="name" style="float:right; width: 200px;" />
-                                        
-                                        <input type="submit" name="search" value="Tìm kiếm" class="btn btn-warning btn-sm" style="float:right;  margin-right: 20px;" />
+                                    <form method="get" action="<%=request.getContextPath()%>/admin/song">
+                                        <input value="<%if(request.getParameter("sname")!=null) out.print(request.getParameter("sname")); %>" type="search" class="form-control input-sm" placeholder="Nhập tên bài hát" name="sname" style="float:right; width: 200px;" />
+                                        <select name="scat"  class="btn-sm" style="float:right; margin-right:20px;" >
+                                        	<option value="0">-- Chọn danh mục --</option>
+                                        	<%
+                                        	if(request.getAttribute("catList")!=null){
+                                        		List<Category> listCat=(List<Category>)request.getAttribute("catList");
+                                        		if(listCat.size()>0){
+                                        			for(Category cat:listCat){
+                                        	%>
+	                                       				 <option value="<%=cat.getId()%>"><%=cat.getName() %></option>
+	                                   		<%
+                                        			}
+                                        		}
+                                        	}
+                                        %>
+                                        </select>
+                                        <input type="submit" name="search" value="Tìm kiếm" class="btn btn-warning btn-sm" style="float:right;  margin-right:20px;" />
                                         <div style="clear:both"></div>
                                     </form><br />
                                 </div>
@@ -76,6 +91,7 @@
                                 </thead>
                                 <tbody>
                                 	<%
+                                	 	SongDAO songDAO=new SongDAO();
                                 		List<Song> songList=null;
                                 		if(request.getAttribute("songList")!=null){
                                 			songList=(List<Song>)request.getAttribute("songList");
@@ -83,12 +99,13 @@
                                 				for(Song songs:songList){
                                 					String urlDel=request.getContextPath()+"/admin/song/del?sid="+songs.getId();
                                 					String urlEdit=request.getContextPath() +"/admin/song/edit?id="+songs.getId();
+                                					int count=songDAO.countId(songs.getCounter());
                                 	%>
                                     <tr>
                                         <td><%=songs.getId() %></td>
                                         <td class="center"><%=songs.getName() %></td>
                                         <td class="center"><%=songs.getCat().getName() %></td>
-                                        <td class="center"><%=songs.getCounter() %></td>
+                                        <td class="center"><%=count%></td>
                                         <td class="center">
                                         	
                                         	<%

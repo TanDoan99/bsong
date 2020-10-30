@@ -21,7 +21,7 @@ public class PublicIndexController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		response.setCharacterEncoding("UTF-8");
-		//System.out.println(request.getServletContext().getRealPath(""));
+		System.out.println(request.getServletContext().getRealPath(""));
 		SongDAO songDAO=new SongDAO();
 		
 		int currentPage=1;

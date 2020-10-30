@@ -20,6 +20,7 @@
          <%=obj.getDetail() %>
       </div>
     </div>
+      <h2>Bài viết liên quan</h2>
     <%
     	}
     }
@@ -27,12 +28,13 @@
     for(Song objDet : listDetail){
     	idDetSong = objDet.getId();
   	  if( idSong!=idDetSong ){
+  		  SongDAO sD=new SongDAO();
+  		  Song song=sD.findOne(idDetSong);
     %>
     <div class="article">
-      <h2>Bài viết liên quan</h2>
       <div class="clr"></div>
-      <div class="comment"> <a href=""><img src="images/<%=objDet.getPicture()%>" width="40" height="40" alt="" class="userpic" /></a>
-        <h2><a href=""><%=objDet.getName()%></a></h2>
+      <div class="comment"> <a href=""><img src="<%=request.getContextPath()%>/uploads/images/<%=objDet.getPicture()%>" width="40" height="40" alt="" class="userpic" /></a>
+        <h2><a href="<%=request.getContextPath()+"/chi-tiet/"+StringUtil.makeSlug(song.getName())+"-"+song.getId() + "-" + song.getCat().getId() + ".html"%>"><%=objDet.getName()%></a></h2>
         <p><%=objDet.getDescription() %></p>
       </div>
     </div>

@@ -49,7 +49,7 @@
 		<servlet-name>PublicDetailController</servlet-name>
 		<url-pattern>/detail</url-pattern>
 	</servlet-mapping>
-
+	
 	<servlet>
 		<servlet-name>PublicContactController</servlet-name>
 		<servlet-class>controllers.publics.PublicContactController</servlet-class>
@@ -121,7 +121,7 @@
 		<servlet-name>AdminEditCatController</servlet-name>
 		<url-pattern>/admin/cat/edit</url-pattern>
 	</servlet-mapping>
-
+	
 	<servlet>
 		<servlet-name>AdminIndexUserController</servlet-name>
 		<servlet-class>controllers.admins.user.AdminIndexUserController</servlet-class>

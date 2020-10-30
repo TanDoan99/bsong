@@ -29,22 +29,21 @@ public class AdminIndexSongController extends HttpServlet {
 		}
 		SongDAO songDAO=new SongDAO();
 		CatDAO catDAO=new CatDAO();
-		String name="";
-		int cat=0;
-		if(request.getParameter("name")!=null) {
+		String sname="";
+		int scat=0;
+		if(request.getParameter("sname")!=null) {
 			//người dùng có nhập => muốn tìm kiếm
-			name=request.getParameter("name");
+			sname=request.getParameter("sname");
 		}
-		if (request.getParameter("cat")!=null) {
-			cat=Integer.parseInt(request.getParameter("cat"));
+		if (request.getParameter("scat")!=null) {
+			scat=Integer.parseInt(request.getParameter("scat"));
 		}
-		if(cat>0) {
+		if(scat>0) {
 			//người dùng muốn tìm kiếm danh mục 
-			cat=Integer.parseInt(request.getParameter("cat"));
+			scat=Integer.parseInt(request.getParameter("scat"));
 		}
-		Song song = new Song(name, new Category(cat));
-		List<Song> ListSearch=songDAO.findAllByIdAndNameOrderByNewsId(song); 
-		
+		Song song = new Song(sname, new Category(scat));
+		List<Song> listSearch=songDAO.findAllByIdAndNameOrderByNewsId(song); 
 		int currentPage=1;
 		try {
 			
@@ -60,8 +59,8 @@ public class AdminIndexSongController extends HttpServlet {
 		int offset=(currentPage-1)*DefineUtil.NUMBER_PER_PAGE;
 		List<Song> songList=songDAO.getItemPagination(offset);
 		List<Category> catList=catDAO.findAll();
-		if(cat>0|| !"".equals(name)) {
-			songList=ListSearch;
+		if(scat>0|| !"".equals(sname)) {
+			songList=listSearch;
 		}
 		
 		request.setAttribute("songList", songList);

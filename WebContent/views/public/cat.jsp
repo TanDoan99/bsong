@@ -29,7 +29,7 @@
       <h2><a href="" title="<%=catSong.getName()%>"><%=catSong.getName()%></a></h2>
       <p class="infopost">Ngày đăng:<%=catSong.getCreateAt() %>. Lượt xem: <%=catSong.getCounter() %> <a href="#" class="com"><span><%=catSong.getId() %></span></a></p>
       <div class="clr"></div>
-      <div class="img"><img src="<%=request.getContextPath()%>/templates/public/images/<%=catSong.getPicture() %>" width="177" height="213" alt="Đổi thay" class="fl" /></div>
+      <div class="img"><img src="<%=request.getContextPath()%>/uploads/images/<%=catSong.getPicture() %>" width="177" height="213" alt="Đổi thay" class="fl" /></div>
       <div class="post_content">
         <p><%=catSong.getDescription()%>.</p>
         <p class="spec"><a href="<%=urlSlug%>" class="rm">Chi tiết &raquo;</a></p>
@@ -40,8 +40,6 @@
     			}
     		}
     	}
-   %>
-   <%
    	int numberOfPages=(Integer)request.getAttribute("numberOfPages");
    	int currentPage=(Integer)request.getAttribute("currentPage");
    	if(listCatSong!=null&&listCatSong.size()>0){

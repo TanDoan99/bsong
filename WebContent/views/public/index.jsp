@@ -17,7 +17,7 @@
   	
   %>
     <div class="article">
-      <h2><a href="" title="<%=song.getName() %>"><%=song.getName() %></a></h2>
+      <h2><a href="<%=urlSlug%>" title="<%=song.getName() %>"><%=song.getName() %></a></h2>
       <p class="infopost">Ngày đăng: <%=song.getCreateAt()%>. Lượt xem: <%=song.getCounter() %> <a href="#" class="com"><span><%=song.getId() %></span></a></p>
       <div class="clr"></div>
       <div class="img"><img src="<%=request.getContextPath()%>/uploads/images/<%=song.getPicture()%>" width="177" height="213" alt="<%=song.getName() %>" class="fl" /></div>

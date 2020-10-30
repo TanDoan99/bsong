@@ -1,6 +1,7 @@
 package controllers.admins.cat;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -12,45 +13,61 @@ import daos.CatDAO;
 import models.Category;
 import utils.AuthUtil;
 import utils.DefineUtil;
+
 public class AdminIndexCatController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    public AdminIndexCatController() {
-        super();
-      
-    }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public AdminIndexCatController() {
+		super();
+
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		response.setContentType("text/html");
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
-		if(!AuthUtil.checkLogin(request, response)) {
-			response.sendRedirect(request.getContextPath()+"/auth/login");
+		if (!AuthUtil.checkLogin(request, response)) {
+			response.sendRedirect(request.getContextPath() + "/auth/login");
 			return;
 		}
 		CatDAO catDao = new CatDAO();
-		int currentPage=1;
+		String snames = "";
+		if (request.getParameter("snames") != null) {
+			// người dùng có nhập => muốn tìm kiếm
+			snames = request.getParameter("snames");
+		}
+		Category cat = new Category(snames);
+		List<Category> listSearch = new ArrayList<Category>();
+		listSearch = catDao.searchNameCat(cat);
+
+		int currentPage = 1;
 		try {
-			
-			currentPage=Integer.parseInt(request.getParameter("page"));
+
+			currentPage = Integer.parseInt(request.getParameter("page"));
 		} catch (Exception e) {
-			currentPage=1;
+			currentPage = 1;
 		}
-		int numberOfItems= catDao.findAll().size();
-		int numberOfPages=(int) Math.ceil((float) numberOfItems/DefineUtil.NUMBER_PER_PAGE);
-		if(currentPage>numberOfPages||currentPage<1) {	
-			currentPage=1;
+		int numberOfItems = catDao.findAll().size();
+		int numberOfPages = (int) Math.ceil((float) numberOfItems / DefineUtil.NUMBER_PER_PAGE);
+		if (currentPage > numberOfPages || currentPage < 1) {
+			currentPage = 1;
 		}
-		int offset=(currentPage-1)*DefineUtil.NUMBER_PER_PAGE;
+		int offset = (currentPage - 1) * DefineUtil.NUMBER_PER_PAGE;
 		List<Category> catList = catDao.getItemPagination(offset);
+		if (!"".equals(snames)) {
+			catList = listSearch;
+		}
 		request.setAttribute("catList", catList);
 		request.setAttribute("numberOfPages", numberOfPages);
 		request.setAttribute("currentPage", currentPage);
 		request.getRequestDispatcher("/views/admin/cat/index.jsp").forward(request, response);
-		
+
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 	}
 
 }

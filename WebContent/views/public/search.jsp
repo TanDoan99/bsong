@@ -6,37 +6,33 @@
 <div class="content_resize">
   <div class="mainbar">
   <h1>Kết quả tìm kiếm</h1>
-  		<%
-  			ArrayList<Song> arr = null;
-  			if(request.getAttribute("arrSong") != null){
+  	<% 
+  		ArrayList<Song> arr = null;
+  		if(request.getAttribute("arrSong") !=null){
   				arr = (ArrayList)request.getAttribute("arrSong");
-  				for(Song s : arr){
-  					String urlSlug=request.getContextPath()+"/chi-tiet/"+StringUtil.makeSlug(s.getName())+"-"+s.getId() + "-" + s.getCat().getId() + ".html";
+  				if(arr.size()>0){
+  				for(Song song : arr){
+  					String urlSlug=request.getContextPath()+"/chi-tiet/"+StringUtil.makeSlug(song.getName())+"-"+song.getId() + "-" + song.getCat().getId() + ".html";
 		%>
 	<div class="article">
-      <h2><a href="" title="<%=s.getName()%>"><%=s.getName()%></a></h2>
-      <p class="infopost">Ngày đăng: <%=s.getCreateAt() %>. Lượt xem: <%=s.getCounter()%> <a href="#" class="com"><span><%=s.getId()%></span></a></p>
+      <h2><a href="" title="<%=song.getName()%>"><%=song.getName()%></a></h2>
+      <p class="infopost">Ngày đăng: <%=song.getCreateAt() %>. Lượt xem: <%=song.getCounter()%> <a href="#" class="com"><span><%=song.getId()%></span></a></p>
       <div class="clr"></div>
-      <div class="img"><img src="<%=request.getContextPath()%>/uploads/images/<%=s.getPicture()%>" width="177" height="213" alt="<%=s.getPicture()%>" class="fl" /></div>
+      <div class="img"><img src="<%=request.getContextPath()%>/uploads/images/<%=song.getPicture()%>" width="177" height="213" alt="<%=song.getPicture()%>" class="fl" /></div>
       <div class="post_content">
-        <p><%=s.getDescription()%></p>
+        <p><%=song.getDescription()%></p>
         <p class="spec"><a href="<%=urlSlug%>" class="rm">Chi tiết &raquo;</a></p>
       </div>
       <div class="clr"></div>
   	</div>
   	<%			
-  		}
- 	 }else {
+  		}}else{
+  				%>
+  	<br/>
+  	<div style='background: orange;text-align: center;border-radius: 30px/80px;padding-bottom: 7px;padding-top: 7px;line-height: 13px;'><b>Không có bài hát nào!</b></div>
+  				<% 
+  		} }
  	%>
-  	<div class="article">
-  				Không có bài hát cần tìm!
-  				
-    </div>
-  		<%
-  		System.out.print("k có bài cần tìm");
-  			}
-  		%>
-  	
 </div>
   <div class="sidebar">
       <%@ include file="/templates/public/inc/leftbar.jsp" %>
