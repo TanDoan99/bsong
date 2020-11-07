@@ -12,10 +12,10 @@
         <!-- /. ROW  -->
           <%
       		String err = (String) request.getParameter("err");
-           	if("0".equals(err)) {
+           	if("3".equals(err)) {
           %>
 			<div class="alert alert-danger" role="alert">
- 				 Thêm thất bại!
+ 				 Vui lòng nhập tên danh mục!
 			</div>
 		<%
 			}

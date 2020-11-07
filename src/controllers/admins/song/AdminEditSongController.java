@@ -9,6 +9,7 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 import daos.CatDAO;
 import daos.SongDAO;
@@ -28,8 +29,8 @@ public class AdminEditSongController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		if(!AuthUtil.checkLogin(request, response)) {
-			response.sendRedirect(request.getContextPath()+"/auth/login");
+		if (!AuthUtil.checkLogin(request, response)) {
+			response.sendRedirect(request.getContextPath() + "/auth/login");
 			return;
 		}
 		int id = 0;
@@ -53,28 +54,38 @@ public class AdminEditSongController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		int id = Integer.parseInt(request.getParameter("id"));
-		String name = request.getParameter("name");
-		int category =Integer.parseInt(request.getParameter("category"));
-		String preview = request.getParameter("preview");
-		String detail = request.getParameter("detail");
-		
-		//upload anh
-		String fileName=FileUtil.upload("picture", request);
-		System.out.println(fileName);
-		SongDAO songDAO=new SongDAO();
-		if("".equals(fileName)) {
-			Song itemSong=songDAO.findSong(id);
-			fileName=itemSong.getPicture();
-		}
-		Song song=new Song(id, name, preview, detail, fileName, new Category(category));
-		
-		if(songDAO.editSong(song)>0) {
-			System.out.println(123);
-			response.sendRedirect(request.getContextPath()+"/admin/song?msg=ok");
+		if (!AuthUtil.checkLogin(request, response)) {
+			response.sendRedirect(request.getContextPath() + "/auth/login");
 			return;
 		}
-		
+		int id = Integer.parseInt(request.getParameter("id"));
+		String name = request.getParameter("name");
+		int category = Integer.parseInt(request.getParameter("category"));
+		String preview = request.getParameter("preview");
+		String detail = request.getParameter("detail");
+
+		// upload anh
+		String fileName = FileUtil.upload("picture", request);
+		// System.out.println(fileName);
+		SongDAO songDAO = new SongDAO();
+		Song itemSong = songDAO.findSong(id);
+		if ("".equals(fileName)) {
+			fileName = itemSong.getPicture();
+		}
+		Song song = new Song(id, name, preview, detail, fileName, new Category(category));
+
+		if (songDAO.editSong(song) > 0) {
+			// sua thanh cong thi xoa anh cu
+			Part part = request.getPart("picture");
+			String fileNameNew = part.getSubmittedFileName();
+			if (!"".equals(fileNameNew)) {
+//			if(!"".equals(request.getPart("picture").getSubmittedFileName())) {//nếu có chọn ảnh mới
+				FileUtil.delFile(itemSong.getPicture(), request);
+			}
+			// System.out.println(123);
+			response.sendRedirect(request.getContextPath() + "/admin/song?msg=ok");
+			return;
+		}
 
 	}
 

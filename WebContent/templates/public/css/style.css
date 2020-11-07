@@ -505,3 +505,22 @@ ol li .send {
 a {
 	outline:none;
 }
+#cmt{
+	margin-left: 20px;
+}
+.form-item{
+	float: left;
+}
+ .btn{
+ 	background:#F5A9D0;
+	border: 1px solid #b1154a;
+	text-decoration: none;
+}
+.ajax-data{
+	border-bottom: 1px solid #b1154a;
+	width: 660px;
+	margin-bottom: 10px;
+}
+button:hover {
+	background-color: green;
+}

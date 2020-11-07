@@ -24,6 +24,7 @@ public class LoginController extends HttpServlet {
 		//thong tin dang nhap
 		String username = request.getParameter("username");
 		String password = StringUtil.md5(request.getParameter("password"));
+		request.setAttribute("username", username);
 		//kiem tra thong tin dang nhap
 		User userInfo =userDAO.findUsernameAndPassword(username, password);
 		

@@ -14,12 +14,13 @@ import models.Song;
 
 public class PublicSearchController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    public PublicSearchController() {
-        super();
-    }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public PublicSearchController() {
+		super();
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		String editbox_search = request.getParameter("editbox_search");
 		ArrayList<Song> arrSong = new ArrayList<Song>();
 		arrSong = new SongDAO().searchSong(editbox_search);
@@ -28,7 +29,8 @@ public class PublicSearchController extends HttpServlet {
 		rd.forward(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
 	}
 

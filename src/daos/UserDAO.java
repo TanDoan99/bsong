@@ -104,7 +104,7 @@ public class UserDAO extends AbstractDAO {
 			pst.setString(1, users.getPassword());
 			pst.setString(2, users.getFullname());
 			pst.setInt(3, users.getId());
-			
+
 			result = pst.executeUpdate();
 
 		} catch (SQLException e) {
@@ -122,9 +122,9 @@ public class UserDAO extends AbstractDAO {
 		String sql = "DELETE FROM users WHERE id = ?";
 		try {
 			pst = con.prepareStatement(sql);
-			
+
 			pst.setInt(1, id);
-			
+
 			result = pst.executeUpdate();
 
 		} catch (SQLException e) {
@@ -135,19 +135,18 @@ public class UserDAO extends AbstractDAO {
 
 		return result;
 	}
+
 	public User findUsernameAndPassword(String username, String password) {
-		User user= null;
-		con=DBConnectionUtil.getConnection();
+		User user = null;
+		con = DBConnectionUtil.getConnection();
 		try {
 			String sql = "SELECT * FROM users WHERE username = ? AND password = ? ";
 			pst = con.prepareStatement(sql);
 			pst.setString(1, username);
 			pst.setString(2, password);
 			rs = pst.executeQuery();
-			if(rs.next()) {
-				user = new User(rs.getInt("id"),
-						rs.getString("username"),
-						rs.getString("password"),
+			if (rs.next()) {
+				user = new User(rs.getInt("id"), rs.getString("username"), rs.getString("password"),
 						rs.getString("fullname"));
 			}
 		} catch (SQLException e) {
@@ -163,18 +162,20 @@ public class UserDAO extends AbstractDAO {
 		String sql = "SELECT * FROM  users ORDER BY id DESC LIMIT ?, ? ";
 		List<User> listItems = new ArrayList<>();
 		try {
-			pst=con.prepareStatement(sql);
-			pst.setInt(1,offset );
+			pst = con.prepareStatement(sql);
+			pst.setInt(1, offset);
 			pst.setInt(2, DefineUtil.NUMBER_PER_PAGE);
-			rs=pst.executeQuery();
-			while(rs.next()) {
-				User us = new User(rs.getInt("id"), rs.getString("username"), rs.getString("password"), rs.getString("fullname"));
+			rs = pst.executeQuery();
+			while (rs.next()) {
+				User us = new User(rs.getInt("id"), rs.getString("username"), rs.getString("password"),
+						rs.getString("fullname"));
 				listItems.add(us);
-			} ;
+			}
+			;
 		} catch (SQLException e) {
 			e.printStackTrace();
-		
-		}finally {
+
+		} finally {
 			DBConnectionUtil.close(rs, pst, con);
 		}
 		return listItems;

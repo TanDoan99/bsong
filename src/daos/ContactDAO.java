@@ -31,37 +31,39 @@ public class ContactDAO extends AbstractDAO {
 	}
 
 	public List<Contact> findAll() {
-		List<Contact> listContact=new ArrayList<>();
-		con=DBConnectionUtil.getConnection();
-		String sql="SELECT * FROM contacts ORDER BY id DESC";
+		List<Contact> listContact = new ArrayList<>();
+		con = DBConnectionUtil.getConnection();
+		String sql = "SELECT * FROM contacts ORDER BY id DESC";
 		try {
-			st=con.createStatement();
-			rs=st.executeQuery(sql);
-			while(rs.next()) {
-				Contact cont= new Contact(rs.getInt("id"), rs.getString("name"), rs.getString("website"), rs.getString("email"), rs.getString("message"));
+			st = con.createStatement();
+			rs = st.executeQuery(sql);
+			while (rs.next()) {
+				Contact cont = new Contact(rs.getInt("id"), rs.getString("name"), rs.getString("website"),
+						rs.getString("email"), rs.getString("message"));
 				listContact.add(cont);
-			} ;
+			}
+			;
 		} catch (SQLException e) {
 			e.printStackTrace();
-		
-		}finally {
+
+		} finally {
 			DBConnectionUtil.close(rs, st, con);
 		}
 		return listContact;
 	}
 
 	public int del(int id) {
-		int result=0;
-		con=DBConnectionUtil.getConnection();
-		String sql="DELETE FROM contacts WHERE id=?";
+		int result = 0;
+		con = DBConnectionUtil.getConnection();
+		String sql = "DELETE FROM contacts WHERE id=?";
 		try {
-			pst=con.prepareStatement(sql);
-			pst.setInt(1,id);
-			result=pst.executeUpdate();
+			pst = con.prepareStatement(sql);
+			pst.setInt(1, id);
+			result = pst.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		} finally {
 			DBConnectionUtil.close(rs, pst, con);
 		}
 		return result;
@@ -72,18 +74,20 @@ public class ContactDAO extends AbstractDAO {
 		String sql = "SELECT * FROM contacts ORDER BY id DESC LIMIT ?, ? ";
 		List<Contact> listItems = new ArrayList<>();
 		try {
-			pst=con.prepareStatement(sql);
-			pst.setInt(1,offset );
+			pst = con.prepareStatement(sql);
+			pst.setInt(1, offset);
 			pst.setInt(2, DefineUtil.NUMBER_PER_PAGE);
-			rs=pst.executeQuery();
-			while(rs.next()) {
-				Contact cont = new Contact(rs.getInt("id"), rs.getString("name"),rs.getString("website"), rs.getString("email"), rs.getString("message"));
+			rs = pst.executeQuery();
+			while (rs.next()) {
+				Contact cont = new Contact(rs.getInt("id"), rs.getString("name"), rs.getString("website"),
+						rs.getString("email"), rs.getString("message"));
 				listItems.add(cont);
-			} ;
+			}
+			;
 		} catch (SQLException e) {
 			e.printStackTrace();
-		
-		}finally {
+
+		} finally {
 			DBConnectionUtil.close(rs, pst, con);
 		}
 		return listItems;

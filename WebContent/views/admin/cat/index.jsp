@@ -25,7 +25,7 @@
                                 </div>
                                  <form method="get" action="<%=request.getContextPath()%>/admin/cat/index">
                                 
-                            	<input value="<%if(request.getParameter("sname")!=null) out.print(request.getParameter("sname")); %>" type="search" class="form-control input-sm" placeholder="Nhập tên danh mục" name="snames" style="float:right; width: 200px;" />
+                            	<input value="<%if(request.getParameter("snames")!=null) out.print(request.getParameter("snames")); %>" type="search" class="form-control input-sm" placeholder="Nhập tên danh mục" name="snames" style="float:right; width: 200px;" />
 							    <input type="submit" name="search" value="Tìm kiếm" class="btn btn-warning btn-sm" style="float:right;  margin-right:20px;" />
                                 </form>
                             </div>
@@ -68,7 +68,6 @@
 							<%
 								}
 							%>
-							
                             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                 <thead>
                                     <tr>

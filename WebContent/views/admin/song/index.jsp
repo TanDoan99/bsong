@@ -31,15 +31,20 @@
                                 <div class="col-sm-6" style="text-align: right;">
                                     <form method="get" action="<%=request.getContextPath()%>/admin/song">
                                         <input value="<%if(request.getParameter("sname")!=null) out.print(request.getParameter("sname")); %>" type="search" class="form-control input-sm" placeholder="Nhập tên bài hát" name="sname" style="float:right; width: 200px;" />
-                                        <select name="scat"  class="btn-sm" style="float:right; margin-right:20px;" >
+                                        <select  name="scat"  class="btn-sm" style="float:right; margin-right:20px;" >
                                         	<option value="0">-- Chọn danh mục --</option>
                                         	<%
+                                        	int scat = 0;
+                                        	if(request.getAttribute("scat")!=null){
+                                        		scat =(Integer) request.getAttribute("scat");
+                                        	}
                                         	if(request.getAttribute("catList")!=null){
                                         		List<Category> listCat=(List<Category>)request.getAttribute("catList");
                                         		if(listCat.size()>0){
                                         			for(Category cat:listCat){
                                         	%>
-	                                       				 <option value="<%=cat.getId()%>"><%=cat.getName() %></option>
+	                                       				 <option <%if(scat==cat.getId()) out.print("selected");%> 
+	                                       				 value="<%=cat.getId()%>"><%=cat.getName() %></option>
 	                                   		<%
                                         			}
                                         		}

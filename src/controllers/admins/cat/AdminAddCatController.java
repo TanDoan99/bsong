@@ -19,6 +19,10 @@ public class AdminAddCatController extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if(!AuthUtil.checkLogin(request, response)) {
+			response.sendRedirect(request.getContextPath()+"/auth/login");
+			return;
+		}
 		RequestDispatcher rd=request.getRequestDispatcher("/views/admin/cat/add.jsp");
 		rd.forward(request, response);
 		
@@ -34,6 +38,11 @@ public class AdminAddCatController extends HttpServlet {
 		}
 		CatDAO catDAO=new CatDAO();
 		String name=request.getParameter("name");
+		if("".equals(name)) {
+			RequestDispatcher rd=request.getRequestDispatcher("/views/admin/cat/add.jsp?err=3");
+			rd.forward(request, response);
+			return;
+		}
 		Category cat=new Category(name);
 		int add=catDAO.add(cat);
 		if(add>0) {

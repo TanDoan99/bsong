@@ -39,7 +39,7 @@
                                 <form role="form" method="post"  id="form"action="<%=request.getContextPath()%>/auth/login">
                                     <div class="form-group">
                                         <label for="name">Tên đăng nhập</label>
-                                        <input type="text" id="name" value="" name="username" class="form-control" />
+                                        <input type="text" id="name" value="${username}" name="username" class="form-control" />
                                     </div>
                                     <div class="form-group">
                                         <label for="name">Mật khẩu</label>

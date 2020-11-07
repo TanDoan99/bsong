@@ -7,7 +7,7 @@
     <div class="sidebar-collapse">
         <ul class="nav" id="main-menu">
             <li class="text-center">
-                <img src="<%=request.getContextPath()%>/templates/admin/assets/img/find_user.png" class="user-image img-responsive" />
+                <img src="<%=request.getContextPath()%>/templates/admin/assets/img/IMG_0309.jpg" class="user-image img-responsive" />
             </li>
             <li>
                 <a id="index" href="<%=request.getContextPath() %>/admin/index"><i class="fa fa-dashboard fa-3x"></i> Trang chủ</a>
@@ -23,6 +23,9 @@
             </li>
             <li>
                 <a id="contact" href="<%=request.getContextPath() %>/admin/contact"><i class="fa fa-envelope fa-3x"></i> Quản lý liên hệ</a>
+            </li>
+            <li>
+                <a id="comment" href="<%=request.getContextPath() %>/admin/comment"><i class="fa fa-comment fa-3x"></i> Quản lý bình luận</a>
             </li>
         </ul>
     </div>

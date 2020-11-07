@@ -22,8 +22,8 @@ public class AdminDelSongController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		if(!AuthUtil.checkLogin(request, response)) {
-			response.sendRedirect(request.getContextPath()+"/auth/login");
+		if (!AuthUtil.checkLogin(request, response)) {
+			response.sendRedirect(request.getContextPath() + "/auth/login");
 			return;
 		}
 		SongDAO songDAO = new SongDAO();
@@ -31,7 +31,7 @@ public class AdminDelSongController extends HttpServlet {
 		// kiem tra tin neu co file thi xoa
 		Song song = songDAO.findOne(id);
 		String picture = song.getPicture();
-		System.out.println("anr:"+picture);
+		System.out.println("anr:" + picture);
 		FileUtil.delFile(picture, request);
 
 		int dele = songDAO.del(id);

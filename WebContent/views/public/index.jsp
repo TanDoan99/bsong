@@ -1,3 +1,5 @@
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="daos.SongDAO"%>
 <%@page import="models.Song"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -9,16 +11,18 @@
   ArrayList<Song> listSong=null;
   	if(request.getAttribute("listSong")!=null){
   		int cat_id = 0;
+  		int i = 0;
   		 listSong=(ArrayList<Song>)request.getAttribute("listSong");
   		SongDAO songDAO=new SongDAO();
   				for(Song song:listSong){
+  					i++;
   					cat_id=songDAO.findCatIdIndex(song.getId());
   					String urlSlug=request.getContextPath()+"/chi-tiet/"+StringUtil.makeSlug(song.getName())+"-"+song.getId() + "-" + song.getCat().getId() + ".html";
   	
   %>
     <div class="article">
       <h2><a href="<%=urlSlug%>" title="<%=song.getName() %>"><%=song.getName() %></a></h2>
-      <p class="infopost">Ngày đăng: <%=song.getCreateAt()%>. Lượt xem: <%=song.getCounter() %> <a href="#" class="com"><span><%=song.getId() %></span></a></p>
+      <p class="infopost">Ngày đăng: <%=song.getCreateAt()%>. Lượt xem: <%=song.getCounter() %> <a href="#" class="com"><span><%=i %></span></a></p>
       <div class="clr"></div>
       <div class="img"><img src="<%=request.getContextPath()%>/uploads/images/<%=song.getPicture()%>" width="177" height="213" alt="<%=song.getName() %>" class="fl" /></div>
       <div class="post_content">
@@ -40,7 +44,7 @@
      	if (currentPage > 1) {
      		int back = currentPage - 1;
      %>
-     <a href="<%=request.getContextPath()%>/index?page=<%=back%>">&laquo;</a>	
+     <a href="<%=request.getContextPath()%>/index.jsp?page=<%=back%>">&laquo;</a>	
      <%
      	}
     	for(int i=1;i<=numberOfPages;i++){
@@ -50,14 +54,14 @@
     <%
     		} else {
     %>
-    <a href="<%=request.getContextPath()%>/index?page=<%=i%>"><%=i %></a>
+    <a href="<%=request.getContextPath()%>/index.jsp?page=<%=i%>"><%=i %></a>
      <%
     	 	}
     	}
     	if (currentPage < numberOfPages) {
     		int next = currentPage + 1;
     %>
-    <a href="<%=request.getContextPath()%>/index?page=<%=next%>">&raquo;</a></p>
+    <a href="<%=request.getContextPath()%>/index.jsp?page=<%=next%>">&raquo;</a></p>
     <%
     	}
      %>

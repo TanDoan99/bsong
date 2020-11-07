@@ -50,6 +50,10 @@ public class Song {
 		this.name = name;
 		this.cat = cat;
 	}
+	public Song(int id) {
+		super();
+		this.id = id;
+	}
 	
 	
 }

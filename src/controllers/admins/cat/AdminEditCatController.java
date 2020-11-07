@@ -42,12 +42,16 @@ public class AdminEditCatController extends HttpServlet {
 		response.setContentType("text/html");
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
+		if(!AuthUtil.checkLogin(request, response)) {
+			response.sendRedirect(request.getContextPath()+"/auth/login");
+			return;
+		}
 		CatDAO catDAO=new CatDAO();
 		int id=Integer.parseInt(request.getParameter("id"));
 		String name=request.getParameter("name");
-		request.setAttribute("name",name );
 		Category cat=new Category(id, name);
 		int edit=catDAO.edit(cat);
+		request.setAttribute("name",name );
 		if(edit>0) {
 			//sua thanh cong
 			response.sendRedirect(request.getContextPath()+"/admin/cat/index?msg=2");

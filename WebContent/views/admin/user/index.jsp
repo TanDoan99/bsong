@@ -52,6 +52,27 @@
 							</div>
 							<%
 								}
+								if("3".equals(err)) {
+							%>
+							<div class="alert alert-danger" role="alert">
+	 							 không có quyền thêm!
+							</div>
+							<%
+								}
+								if("4".equals(err)) {
+							%>
+							<div class="alert alert-danger" role="alert">
+	 							 không được phép sửa!
+							</div>
+							<%
+								}
+								if("5".equals(err)) {
+							%>
+							<div class="alert alert-danger" role="alert">
+	 							 không được phép xóa!
+							</div>
+							<%
+								}
 							%>
                             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                 <thead>
@@ -77,8 +98,18 @@
                                         <td class="center"><%=user.getUsername() %></td>
                                         <td class="center"><%=user.getFullname() %></td>
                                         <td class="center">
+                                        <% 
+                                        	User userInfo= (User)session.getAttribute("userInfo");
+                                        	if("admin".equals(userInfo.getUsername())){
+                                        %>
                                             <a href="<%=request.getContextPath() %>/admin/user/edit?id=<%=user.getId() %>" title="" class="btn btn-primary"><i class="fa fa-edit "></i> Sửa</a>
                                             <a href="<%=request.getContextPath() %>/admin/user/del?id=<%=user.getId() %>" title="" class="btn btn-danger"onclick="return confirm('Bạn có chắc chắn muốn xóa người dùng không?')"><i class="fa fa-pencil"></i> Xóa</a>
+                                        <%}else{
+                                        	if(userInfo.getId()==user.getId()){
+                                        %>
+                                            <a href="<%=request.getContextPath() %>/admin/user/edit?id=<%=user.getId() %>" title="" class="btn btn-primary"><i class="fa fa-edit "></i> Sửa</a>
+											  <a href="<%=request.getContextPath() %>/admin/user/del?id=<%=user.getId() %>" title="" class="btn btn-danger"onclick="return confirm('Bạn có chắc chắn muốn xóa người dùng không?')"><i class="fa fa-pencil"></i> Xóa</a>
+                                        <%} }%>
                                         </td>
                                     </tr>
 									<%

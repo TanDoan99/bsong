@@ -10,6 +10,7 @@
     <title>AdminCP | VinaEnter Edu</title>
     <!-- BOOTSTRAP STYLES-->
     <link href="<%=request.getContextPath()%>/templates/admin/assets/css/bootstrap.css" rel="stylesheet" />
+    <link rel="icon" type="image/jpg" href="<%=request.getContextPath()%>/templates/admin/assets/img/logo-su-tu.jpg"/>
     <!-- FONTAWESOME STYLES-->
     <link href="<%=request.getContextPath()%>/templates/admin/assets/css/font-awesome.css" rel="stylesheet" />
     <!-- CUSTOM STYLES-->

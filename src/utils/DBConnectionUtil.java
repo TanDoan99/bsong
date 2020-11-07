@@ -9,8 +9,10 @@ import java.sql.Statement;
 
 public class DBConnectionUtil {
 	private static String url = "jdbc:mysql://localhost:3306/bsong?useUnicode=true&characterEncoding=UTF-8";
+	//private static String url = "jdbc:mysql://node236018-bsongdntan.j.layershift.co.uk/bsong?useUnicode=true&characterEncoding=UTF-8";
 	private static String user = "root";
 	private static String password = "";
+	//private static String password = "EYQplx29674";
 	private static Connection conn = null;
 	
 	public static Connection getConnection() {
