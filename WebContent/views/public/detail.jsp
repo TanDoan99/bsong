@@ -54,7 +54,7 @@
 				ArrayList<Comment> listCmt = (ArrayList<Comment>) session.getAttribute("listCmt");
 				if(listCmt.size()>0){
 			%>
-				<p style='color: green;'> Lượt bình luận : "+listCmt.size()+"</p>
+				<p style='color: green;'> Lượt bình luận : <%=listCmt.size()%></p>
 				<span style='color: blue;'>Bình luận đã có </span></br>
 			<%
 				for (Comment objCmt : listCmt) {
