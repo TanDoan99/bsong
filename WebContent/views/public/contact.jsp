@@ -7,22 +7,22 @@
       <h2><span>Liên hệ</span></h2>
       <div class="clr" ></div>
       						 <%
-								String msg = (String) request.getParameter("msg");
-								String err = (String) request.getParameter("err");
-								
-								String name=request.getParameter("name");
-								String email=request.getParameter("email");
-								String website=request.getParameter("website");
-								String message=request.getParameter("message");
-								
-								if("ok".equals(msg)) {
-							%>
+      						 	String msg = (String) request.getParameter("msg");
+      						       						 						String err = (String) request.getParameter("err");
+      						       						 						
+      						       						 						String name=request.getParameter("name");
+      						       						 						String email=request.getParameter("email");
+      						       						 						String website=request.getParameter("website");
+      						       						 						String message=request.getParameter("message");
+      						       						 						
+      						       						 						if("ok".equals(msg)) {
+      						 %>
 							<div class="alert alert-success" role="alert"Style="color: green;">
 	 							<b>Thêm liên hệ thành công!</b>
 							</div>
 							<%
 								}
-								if("off".equals(err)) {
+																		if("off".equals(err)) {
 							%>
 							<div class="alert alert-danger" role="alert"Style="color: red;">
 	 							 <b>Có lỗi khi thêm liên hệ!</b>
@@ -41,19 +41,21 @@
         <ol>
           <li>
             <label for="name">Họ tên (required)</label>
-            <input id="name" value="<%if(name!=null)out.print(name); %>" name="name" class="text" />
+            <input id="name" value="<%if(name!=null)out.print(name);%>" name="name" class="text" />
           </li>
           <li>
             <label for="email">Email (required)</label>
-            <input id="email" value="<%if(email!=null)out.print(email); %>" name="email" class="text" />
+            <input id="email" value="<%if(email!=null)out.print(email);%>" name="email" class="text" />
           </li>
           <li>
             <label for="website">Website</label>
-            <input id="website" value="<%if(website!=null)out.print(website); %>" name="website" class="text" />
+            <input id="website" value="<%if(website!=null)out.print(website);%>" name="website" class="text" />
           </li>
           <li>
             <label for="message">Nội dung</label>
-            <textarea id="message" name="message" rows="8" cols="50"><%if(message!=null)out.print(message); %></textarea>
+            <textarea id="message" name="message" rows="8" cols="50"><%
+            	if(message!=null)out.print(message);
+            %></textarea>
           </li>
           <li>
             <input type="image" name="imageField" id="imageField" src="<%=request.getContextPath()%>/templates/public/images/submit.gif" class="send" />

@@ -1,8 +1,8 @@
-﻿<%@page import="daos.SongDAO"%>
+<%@page import="models.Song"%>
+<%@page import="daos.SongDAO"%>
 <%@page import="models.Category"%>
 <%@page import="java.net.URI"%>
 <%@page import="java.awt.Desktop"%>
-<%@page import="models.Song"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
@@ -26,30 +26,30 @@
                         <div class="table-responsive">
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <a href="<%=request.getContextPath() %>/admin/song/add" class="btn btn-success btn-md">Thêm</a>
+                                    <a href="<%=request.getContextPath()%>/admin/song/add" class="btn btn-success btn-md">Thêm</a>
                                 </div>
                                 <div class="col-sm-6" style="text-align: right;">
                                     <form method="get" action="<%=request.getContextPath()%>/admin/song">
-                                        <input value="<%if(request.getParameter("sname")!=null) out.print(request.getParameter("sname")); %>" type="search" class="form-control input-sm" placeholder="Nhập tên bài hát" name="sname" style="float:right; width: 200px;" />
+                                        <input value="<%if(request.getParameter("sname")!=null) out.print(request.getParameter("sname"));%>" type="search" class="form-control input-sm" placeholder="Nhập tên bài hát" name="sname" style="float:right; width: 200px;" />
                                         <select  name="scat"  class="btn-sm" style="float:right; margin-right:20px;" >
                                         	<option value="0">-- Chọn danh mục --</option>
                                         	<%
-                                        	int scat = 0;
-                                        	if(request.getAttribute("scat")!=null){
-                                        		scat =(Integer) request.getAttribute("scat");
-                                        	}
-                                        	if(request.getAttribute("catList")!=null){
-                                        		List<Category> listCat=(List<Category>)request.getAttribute("catList");
-                                        		if(listCat.size()>0){
-                                        			for(Category cat:listCat){
+                                        		int scat = 0;
+                                        	                                        	                                        	if(request.getAttribute("scat")!=null){
+                                        	                                        	                                        		scat =(Integer) request.getAttribute("scat");
+                                        	                                        	                                        	}
+                                        	                                        	                                        	if(request.getAttribute("catList")!=null){
+                                        	                                        	                                        		List<Category> listCat=(List<Category>)request.getAttribute("catList");
+                                        	                                        	                                        		if(listCat.size()>0){
+                                        	                                        	                                        			for(Category cat:listCat){
                                         	%>
 	                                       				 <option <%if(scat==cat.getId()) out.print("selected");%> 
-	                                       				 value="<%=cat.getId()%>"><%=cat.getName() %></option>
+	                                       				 value="<%=cat.getId()%>"><%=cat.getName()%></option>
 	                                   		<%
-                                        			}
-                                        		}
-                                        	}
-                                        %>
+	                                   			}
+	                                   			                                   		                                        		}
+	                                   			                                   		                                        	}
+	                                   		%>
                                         </select>
                                         <input type="submit" name="search" value="Tìm kiếm" class="btn btn-warning btn-sm" style="float:right;  margin-right:20px;" />
                                         <div style="clear:both"></div>
@@ -58,7 +58,7 @@
                             </div>
 							<%
 								String msg = (String) request.getParameter("msg");
-												if("OK".equals(msg)) {
+																						if("OK".equals(msg)) {
 							%>
 							<div class="alert alert-success" role="alert">
 	 							 Thêm thành công!
@@ -66,7 +66,8 @@
 							<%
 								}
 							%>
-							<% if("ok".equals(msg)) {
+							<%
+								if("ok".equals(msg)) {
 							%>
 							<div class="alert alert-success" role="alert">
 	 							 Sửa thành công!
@@ -96,15 +97,15 @@
                                 </thead>
                                 <tbody>
                                 	<%
-                                	 	SongDAO songDAO=new SongDAO();
-                                		List<Song> songList=null;
-                                		if(request.getAttribute("songList")!=null){
-                                			songList=(List<Song>)request.getAttribute("songList");
-                                			if(songList.size()>0){
-                                				for(Song songs:songList){
-                                					String urlDel=request.getContextPath()+"/admin/song/del?sid="+songs.getId();
-                                					String urlEdit=request.getContextPath() +"/admin/song/edit?id="+songs.getId();
-                                					int count=songDAO.countId(songs.getCounter());
+                                		SongDAO songDAO=new SongDAO();
+						List<Song> songList=null;
+                 	if(request.getAttribute("songList")!=null){
+          			songList=(List<Song>)request.getAttribute("songList");
+           	        if(songList.size()>0){
+						for(Song songs:songList){
+       					    String urlDel=request.getContextPath()+"/admin/song/del?sid="+songs.getId();
+         					String urlEdit=request.getContextPath() +"/admin/song/edit?id="+songs.getId();
+     	 					int count=songDAO.countId(songs.getCounter());
                                 	%>
                                     <tr>
                                         <td><%=songs.getId() %></td>

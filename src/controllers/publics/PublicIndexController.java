@@ -27,7 +27,7 @@ public class PublicIndexController extends HttpServlet {
 		SongDAO songDAO = new SongDAO();
 
 		int currentPage = 1;
-		try {
+		try { 
 
 			currentPage = Integer.parseInt(request.getParameter("page"));
 		} catch (Exception e) {

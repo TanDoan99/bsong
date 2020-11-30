@@ -21,6 +21,7 @@ public class PublicDetailController extends HttpServlet {
 		super();
 	}
 
+	// add lombok vào đi à ok có rồi mà dũng, add vô eclipse ấy chỗ nào ông. chọn đến cái chỗ lưu echipse
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		SongDAO songDAO = new SongDAO();

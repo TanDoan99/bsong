@@ -23,7 +23,7 @@
                             <div class="col-md-12">
                             <%
                             	String err = (String) request.getParameter("err");
-                            						if("1".equals(err)) {
+                                                        						if("1".equals(err)) {
                             %>
 							<div class="alert alert-danger" role="alert">
  								 Vui lòng nhập tên danh mục!
@@ -40,8 +40,8 @@
 							<%
 								}
 							%>
-							<% 
-							if("3".equals(err)) {
+							<%
+								if("3".equals(err)) {
 							%>
 							<div class="alert alert-danger" role="alert">
  								 Không tìm thấy id để sửa!
@@ -49,12 +49,11 @@
 							<%
 								}
 							%>
-                                <form action="<%=request.getContextPath() %>/admin/song/edit" role="form" method="post"  id="form" enctype="multipart/form-data">
+                                <form action="<%=request.getContextPath()%>/admin/song/edit" role="form" method="post"  id="form" enctype="multipart/form-data">
                                 	<%
                                 		if(request.getAttribute("song")!=null){
-                                			Song song=(Song) request.getAttribute("song");
-                                			if(song!=null){
-                                				
+                                	                                			Song song=(Song) request.getAttribute("song");
+                                	                                			if(song!=null){
                                 	%>
                                 	
                                    <div class="form-group">
